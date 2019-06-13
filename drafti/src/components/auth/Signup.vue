@@ -58,7 +58,8 @@
                 ref.set({
                   user_id: cred.user.uid,
                   slug: this.slug,
-                  user_email: cred.user.email
+                  user_email: cred.user.email,
+                  username: this.username
                 })
               }).then(() => {
                 this.$router.push({ name: 'Home' })

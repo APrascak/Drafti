@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <h2>This is the profile</h2>
+    <h2 class="center" v-if="user">This is the profile of {{ user.user_email }}</h2>
   </div>
 </template>
 
@@ -13,9 +13,28 @@
     name: 'Profile',
     data() {
       return {
-        profile: null,
+        user: null,
         feedback: null
       }
+    },
+    created() {
+      let ref = db.collection('users')
+
+      // Get the current user
+      ref.where('user_id', '==', firebase.auth().currentUser.uid).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          this.user = doc.data(),
+          this.user.id = doc.id
+          console.log(this.user)
+        })
+      })
+
+      // ref.doc(this.$route.params.id).get()
+      // .then(user => {
+      //   this.user = user.data()
+      // })
+
     }
   }
 </script>

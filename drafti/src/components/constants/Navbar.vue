@@ -8,20 +8,42 @@
         <li><a href="#">Defenses</a></li>
       </ul>
       <ul id="nav-mobile" class="right">
-        <li><a href="#">Register</a></li>
-        <li><router-link :to="{ name: 'SignUp' }">Signup</router-link></li>
+        <li v-if="user"><router-link :to="{ name: 'ViewProfile', params: { id: user.uid }}">View Profile</router-link></li>
+        <li v-if="!user"><router-link :to="{ name: 'Login' }">Login</router-link></li>
+        <li v-if="!user"><router-link :to="{ name: 'SignUp' }">Signup</router-link></li>
+        <li v-if="user"><a @click="logout">Logout</a></li>
       </ul>
     </div>
   </nav>
 </template>
 
 <script>
+  import firebase from 'firebase'
+  import db from '@/firebase/init'
+
   export default {
     name: 'NavBar',
     data() {
       return {
-
+        user: null
       }
+    },
+    methods: {
+      logout() {
+        firebase.auth().signOut().then(() => {
+          this.$router.push({ name: 'Login' })
+        })
+      }
+    },
+    created() {
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          this.user = user
+          console.log(user)
+        } else {
+          this.user = null
+        }
+      })
     }
   }
 </script>

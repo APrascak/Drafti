@@ -4,11 +4,13 @@ import Landing from '@/components/Landing'
 import MockDraft from '@/components/MockDraft'
 import Home from '@/components/Home'
 import SignUp from '@/components/auth/Signup'
+import Login from '@/components/auth/Login'
 import ViewProfile from '@/components/auth/Profile'
+import firebase from 'firebase'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -26,9 +28,32 @@ export default new Router({
       component: SignUp
     },
     {
-      path: '/ViewProfile',
+      path: '/ViewProfile/:id',
       name: 'ViewProfile',
-      component: ViewProfile
+      component: ViewProfile,
+      meta: {
+        requiresAuth: true,
+      }
+    },
+    {
+      path: '/Login',
+      name: 'Login',
+      component: Login
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(rec => rec.meta.requiresAuth)) {
+    let user = firebase.auth().currentUser
+    if (user) {
+      next()
+    } else {
+      next({ name: 'Login' })
+    }
+  } else {
+    next()
+  }
+})
+
+export default router
