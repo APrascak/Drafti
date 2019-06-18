@@ -1,18 +1,15 @@
 <template>
   <div class="container player-lookup">
-    <h2 class="center">This is the main page</h2>
-    <div class="row">
+    <div class="row theSearch">
       <div class="col m3 l3 mainSearch">
-        <div id="search">
+        <div id="search" class="hover">
           <input type="text" name="playerSearch" placeholder="Player Name" v-model="playerSearch">
         </div>
+        <br>
         <div class="tableSearch">
           <table>
-            <thead>
-              Player Name:
-            </thead>
             <tbody>
-              <tr @click="display(player)" v-for="player in stat2018" :key="player.Rk" v-if="player.Player.includes(playerSearch)">
+              <tr @click="display(player)" v-for="player in stat2018" :key="player.Rk" v-if="player.Player.toLowerCase().includes(playerSearch.toLowerCase())">
                 <td>{{ player.Player }}</td>
                 <td>{{ player.FantPos }}</td>
               </tr>
@@ -20,7 +17,18 @@
           </table>
         </div>
       </div>
-      <div class="col m9 l9">
+      <!-- div for displaying player information. -->
+      <div class="col m9 l9 light-green z-depth-3">
+        <!-- Div for upcoming year information. -->
+        <div class="row">
+          <div class="col m3 l3">
+            <img src="https://materializecss.com/images/bold.png" class="circle responsive-img">
+          </div>
+          <div class="col m9 l9">
+            <h4 class="center">{{ stats[0].Player }}</h4>
+          </div>
+        </div>
+        <!-- Table of past years performance. -->
         <table>
           <thead>
             <tr>
@@ -46,13 +54,6 @@
         </table>
       </div>
     </div>
-    <table>
-      <thead>
-        <tr>
-
-        </tr>
-      </thead>
-    </table>
   </div>
 </template>
 
@@ -89,6 +90,7 @@
       }
     },
     created() {
+      // Fixes naming issues for each file before loding into page.
       var i
       ff2017.forEach((player) => {
         player.Yr = 2017
@@ -117,5 +119,11 @@
   }
   .player-lookup #search {
     margin-bottom: 10%;
+  }
+  .player-lookup img {
+    max-height: 2%;
+  }
+  .player-lookup .theSearch {
+    margin-top: 5%;
   }
 </style>
