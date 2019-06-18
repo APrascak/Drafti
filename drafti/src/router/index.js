@@ -6,6 +6,8 @@ import Home from '@/components/Home'
 import SignUp from '@/components/auth/Signup'
 import Login from '@/components/auth/Login'
 import ViewProfile from '@/components/auth/Profile'
+import PlayerHistory from '@/components/statistics/PlayerHistory'
+import PlayerLookup from '@/components/statistics/PlayerLookup'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -32,13 +34,29 @@ const router = new Router({
       name: 'ViewProfile',
       component: ViewProfile,
       meta: {
-        requiresAuth: true,
+        requiresAuth: true
       }
     },
     {
       path: '/Login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/PlayerHistory',
+      name: 'PlayerHistory',
+      component: PlayerHistory,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/PlayerLookup',
+      name: 'PlayerLookup',
+      component: PlayerLookup,
+      meta: {
+        requiresAuth: true
+      }
     }
   ]
 })

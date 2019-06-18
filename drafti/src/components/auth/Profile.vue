@@ -1,6 +1,6 @@
 <template>
   <div class="profile">
-    <h2 class="center" v-if="user">This is the profile of {{ user.user_email }}</h2>
+    <h2 class="center" v-if="user">This is the profile of {{ user.username }}</h2>
   </div>
 </template>
 
