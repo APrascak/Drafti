@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Landing from '@/components/Landing'
-import MockDraft from '@/components/MockDraft'
+import MockDraft from '@/components/statistics/MockDraft'
+import Drafting from '@/components/statistics/Drafting'
 import Home from '@/components/Home'
 import SignUp from '@/components/auth/Signup'
 import Login from '@/components/auth/Login'
@@ -54,6 +54,14 @@ const router = new Router({
       path: '/PlayerLookup',
       name: 'PlayerLookup',
       component: PlayerLookup,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/Drafting',
+      name: 'Drafting',
+      component: Drafting,
       meta: {
         requiresAuth: true
       }

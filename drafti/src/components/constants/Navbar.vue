@@ -1,11 +1,11 @@
 <template id="NavBar">
   <nav>
     <div class="nav-wrapper teal darken-3 z-depth-2">
-      <a class="brand-logo center"><router-link :to="{ name: 'Home' }">Drafti</router-link></a>
+      <a class="brand-logo center"><router-link :to="{ name: 'Home' }"><span class="">Drafti</span></router-link></a>
       <ul id="nav-mobile" class="left">
         <li><router-link :to="{ name: 'PlayerHistory' }">Stats by Year</router-link></li>
         <li><router-link :to="{ name: 'PlayerLookup' }">Player Lookup</router-link></li>
-        <li><a href="#">Defenses</a></li>
+        <li><router-link :to="{ name: 'MockDraft' }">Mock Draft</router-link></li>
       </ul>
       <ul id="nav-mobile" class="right">
         <li v-if="user"><router-link :to="{ name: 'ViewProfile', params: { id: user.uid }}">View Profile</router-link></li>
