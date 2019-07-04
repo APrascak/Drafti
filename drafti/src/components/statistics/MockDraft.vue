@@ -93,6 +93,16 @@
         console.log(this.mockName)
         console.log(this.playerNum)
         console.log(this.pickPos)
+        this.$router.push({
+          name: 'Drafting',
+          params: {
+            mockName: this.mockName,
+            playerNum: this.playerNum,
+            pickPos: this.pickPos,
+            wrNum: this.wrNum,
+            rbNum: this.rbNum,
+            flxNum: this.flexNum
+          }})
       }
     },
     mounted() {
