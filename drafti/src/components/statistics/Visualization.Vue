@@ -1,6 +1,8 @@
-<template id="">
-  <div class="center">
+<template>
+  <div id="visualization" class="center">
     <h2>Visualization Page</h2>
+    <div class="divider teal"></div>
+    <h4 class="red-text">Coming Soon!</h4>
   </div>
 </template>
 
@@ -16,5 +18,8 @@
 </script>
 
 <style media="screen">
-
+  #visualization .divider {
+    width: 50%;
+    margin-left: 25%;
+  }
 </style>
