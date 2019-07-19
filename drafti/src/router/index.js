@@ -10,6 +10,8 @@ import PlayerHistory from '@/components/statistics/PlayerHistory'
 import Visualization from '@/components/statistics/Visualization'
 import PlayerLookup from '@/components/statistics/PlayerLookup'
 import Blog from '@/components/statistics/Blog'
+import Landing from '@/components/Landing'
+import TheDraft from '@/components/TheDraft'
 import firebase from 'firebase'
 
 Vue.use(Router)
@@ -33,6 +35,11 @@ const router = new Router({
       component: SignUp
     },
     {
+      path: '/TheDraft',
+      name: 'TheDraft',
+      component: TheDraft
+    },
+    {
       path: '/ViewProfile/:id',
       name: 'ViewProfile',
       component: ViewProfile,
@@ -44,6 +51,11 @@ const router = new Router({
       path: '/Login',
       name: 'Login',
       component: Login
+    },
+    {
+      path: '/Landing',
+      name: 'Landing',
+      component: Landing
     },
     {
       path: '/PlayerHistory',
@@ -84,6 +96,11 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/Landing',
+      name: 'Landing',
+      component: Landing
     }
   ]
 })
