@@ -6,6 +6,8 @@
     <h5><router-link class="white-text" :to="{ name: 'TheDraft' }">Mock Draft</router-link></h5>
     <h5 class="white-text">Fantasy Statistics</h5>
     <h5 class="white-text">And More....</h5>
+    <button class="btn black"><span><router-link class="white-text" :to="{ name: 'Login' }">Login</router-link></span></button>
+    <button class="btn black"><span><router-link class="white-text" :to="{ name: 'SignUp' }">Signup</router-link></span></button>
     <img src="../assets/Background-PaintedField.jpg">
   </div>
 </template>
@@ -35,7 +37,7 @@
       position: relative;
       z-index: 2;
   }
-  .my-container h5, h4 {
+  .my-container h5, h4, span {
     position: relative;
     z-index: 2;
   }
@@ -54,6 +56,11 @@
     margin-left: 25%;
     height: 3px;
     background-color: black;
+  }
+  .btn {
+    position: relative;
+    z-index: 2;
+    margin: 1% 1% 0% 1%;
   }
 
 </style>

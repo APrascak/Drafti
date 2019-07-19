@@ -1,23 +1,6 @@
 <template>
-  <!-- <div class="center container login">
-    <form @submit.prevent="login" class="card-panel hoverable">
-      <h2 class="center blue-grey-text darken-4">Login</h2>
-      <div class="field">
-        <label for="email" class="left">Email:</label>
-        <input type="email" name="email" v-model="email">
-      </div>
-      <div class="field">
-        <label for="email" class="left">Password:</label>
-        <input type="password" name="password" v-model="password">
-      </div>
-      <p class="center red-text" v-if="feedback">{{ feedback }}</p>
-      <div class="field pulse">
-        <button class="btn deep-purple">Login</button>
-      </div>
-    </form>
-  </div> -->
   <div class="my-container">
-    <h1 class="white-text center">Drafti</h1>
+    <h1 class="center"><router-link class="white-text" :to="{ name: 'Landing' }">Drafti</router-link></h1>
     <div class="divider"></div>
     <div id="navrow" class="row">
       <span><router-link class="white-text" :to="{ name: 'TheDraft' }">Mock Draft</router-link></span>
