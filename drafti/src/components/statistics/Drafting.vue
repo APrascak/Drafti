@@ -183,26 +183,36 @@
               <div class="col m4 l4">
                 <h4 class="teal-text text-darken-4">Your Team</h4>
                 <div class="divider" id="your-team"></div>
-                <ul class="collection">
+              </div>
+              <div class="col m4 l4">
+                <a class='dropdown-trigger btn center black' data-target='dropdown1' id="other-teams">View Other Teams</a>
+                <ul id='dropdown1' class='dropdown-content'>
+                  <li @click="displayTeam(team)" v-for="team in otherTeams" class="black-text"><a class="black-text">Team # {{ team.name }}</a></li>
+                </ul>
+              </div>
+              <div class="col m4 l4">
+                <h4 class="teal-text text-darken-4">Player Stats</h4>
+                <div class="divider" id="feed"></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col m4 l4">
+                <ul class="collection" id="ur-team">
                   <li class="collection-item">QB: <span v-if="userTeam.qb">{{ userTeam.qb.Player }}</span><span class="right" v-if="userTeam.qb">{{ userTeam.qb.Round }}.{{ userTeam.qb.Pick }}</span></li>
                   <li class="collection-item">RB1: <span v-if="userTeam.rb[0]">{{ userTeam.rb[0].Player }}</span><span class="right" v-if="userTeam.rb[0]">{{ userTeam.rb[0].Round }}.{{ userTeam.rb[0].Pick }}</span></li>
                   <li class="collection-item">RB2: <span v-if="userTeam.rb[1]">{{ userTeam.rb[1].Player }}</span><span class="right" v-if="userTeam.rb[1]">{{ userTeam.rb[1].Round }}.{{ userTeam.rb[1].Pick }}</span></li>
                   <li class="collection-item">RB3: <span v-if="userTeam.rb[2]">{{ userTeam.rb[2].Player }}</span><span class="right" v-if="userTeam.rb[2]">{{ userTeam.rb[2].Round }}.{{ userTeam.rb[2].Pick }}</span></li>
-                  <li class="collection-item">TE: <span v-if="userTeam.te">{{ userTeam.te.Player }}</span><span class="right" v-if="userTeam.te">{{ userTeam.te.Round }}.{{ userTeam.te.Pick }}</span></li>
                   <li class="collection-item">WR1: <span v-if="userTeam.wr[0]">{{ userTeam.wr[0].Player }}</span><span class="right" v-if="userTeam.wr[0]">{{ userTeam.wr[0].Round }}.{{ userTeam.wr[0].Pick }}</span></li>
                   <li class="collection-item">WR2: <span v-if="userTeam.wr[1]">{{ userTeam.wr[1].Player }}</span><span class="right" v-if="userTeam.wr[1]">{{ userTeam.wr[1].Round }}.{{ userTeam.wr[1].Pick }}</span></li>
                   <li class="collection-item">WR3: <span v-if="userTeam.wr[2]">{{ userTeam.wr[2].Player }}</span><span class="right" v-if="userTeam.wr[2]">{{ userTeam.wr[2].Round }}.{{ userTeam.wr[2].Pick }}</span></li>
-                  <li class="collection-item">K: <span v-if="userTeam.k">{{ userTeam.k.Player }}</span><span class="right" v-if="userTeam.k">{{ userTeam.k.Round }}.{{ userTeam.k.Pick }}</span></li>
-                  <li class="collection-item">DST: <span v-if="userTeam.dst">{{ userTeam.dst.Player }}</span><span class="right" v-if="userTeam.dst">{{ userTeam.dst.Round }}.{{ userTeam.dst.Pick }}</span></li>
+                  <li class="collection-item">TE: <span v-if="userTeam.te">{{ userTeam.te.Player }}</span><span class="right" v-if="userTeam.te">{{ userTeam.te.Round }}.{{ userTeam.te.Pick }}</span></li>
                   <li class="collection-item">FLEX1: <span v-if="userTeam.flx[0]">{{ userTeam.flx[0].Player }}</span><span class="right" v-if="userTeam.flx[0]">{{ userTeam.flx[0].Round }}.{{ userTeam.flx[0].Pick }}</span></li>
                   <li class="collection-item">FLEX2: <span v-if="userTeam.flx[1]">{{ userTeam.flx[1].Player }}</span><span class="right" v-if="userTeam.flx[1]">{{ userTeam.flx[1].Round }}.{{ userTeam.flx[1].Pick }}</span></li>
+                  <li class="collection-item">K: <span v-if="userTeam.k">{{ userTeam.k.Player }}</span><span class="right" v-if="userTeam.k">{{ userTeam.k.Round }}.{{ userTeam.k.Pick }}</span></li>
+                  <li class="collection-item">DST: <span v-if="userTeam.dst">{{ userTeam.dst.Player }}</span><span class="right" v-if="userTeam.dst">{{ userTeam.dst.Round }}.{{ userTeam.dst.Pick }}</span></li>
                 </ul>
               </div>
               <div class="col m4 l4">
-                <a class='dropdown-trigger btn center black' data-target='dropdown1'>View Other Teams</a>
-                <ul id='dropdown1' class='dropdown-content'>
-                  <li @click="displayTeam(team)" v-for="team in otherTeams"><a>Team # {{ team.name }}</a></li>
-                </ul>
                 <ul class="collection">
                   <li class="collection-item" v-if="viewTeam">QB: <span v-if="viewTeam.qb">{{ viewTeam.qb.Player }}</span><span class="right" v-if="viewTeam.qb">{{ viewTeam.qb.Round }}.{{ viewTeam.qb.Pick }}</span></li>
                   <li class="collection-item" v-if="viewTeam">RB1: <span v-if="viewTeam.rb[0]">{{ viewTeam.rb[0].Player }}</span><span class="right" v-if="viewTeam.rb[0]">{{ viewTeam.rb[0].Round }}.{{ viewTeam.rb[0].Pick }}</span></li>
@@ -211,9 +221,36 @@
                   <li class="collection-item" v-if="viewTeam">WR1: <span v-if="viewTeam.wr[0]">{{ viewTeam.wr[0].Player }}</span><span class="right" v-if="viewTeam.wr[0]">{{ viewTeam.wr[0].Round }}.{{ viewTeam.wr[0].Pick }}</span></li>
                   <li class="collection-item" v-if="viewTeam">WR2: <span v-if="viewTeam.wr[1]">{{ viewTeam.wr[1].Player }}</span><span class="right" v-if="viewTeam.wr[1]">{{ viewTeam.wr[1].Round }}.{{ viewTeam.wr[1].Pick }}</span></li>
                   <li class="collection-item" v-if="viewTeam">WR3: <span v-if="viewTeam.wr[2]">{{ viewTeam.wr[2].Player }}</span><span class="right" v-if="viewTeam.wr[2]">{{ viewTeam.wr[2].Round }}.{{ viewTeam.wr[2].Pick }}</span></li>
-                  <li class="collection-item" v-if="viewTeam">TE: <span v-if="viewTeam.te">{{ viewTeam.te.Player }}</span><span class="right" v-if="viewTeam.qb">{{ viewTeam.te.Round }}.{{ viewTeam.te.Pick }}</span></li>
+                  <li class="collection-item" v-if="viewTeam">TE: <span v-if="viewTeam.te">{{ viewTeam.te.Player }}</span><span class="right" v-if="viewTeam.te">{{ viewTeam.te.Round }}.{{ viewTeam.te.Pick }}</span></li>
                   <li class="collection-item" v-if="viewTeam">FLEX1: <span v-if="viewTeam.flx[0]">{{ viewTeam.flx[0].Player }}</span><span class="right" v-if="viewTeam.flx[0]">{{ viewTeam.flx[0].Round }}.{{ viewTeam.flx[0].Pick }}</span></li>
                   <li class="collection-item" v-if="viewTeam">FLEX2: <span v-if="viewTeam.flx[1]">{{ viewTeam.flx[1].Player }}</span><span class="right" v-if="viewTeam.flx[1]">{{ viewTeam.flx[1].Round }}.{{ viewTeam.flx[1].Pick }}</span></li>
+                  <li class="collection-item" v-if="viewTeam">K: <span v-if="viewTeam.te">{{ viewTeam.k.Player }}</span><span class="right" v-if="viewTeam.k">{{ viewTeam.k.Round }}.{{ viewTeam.k.Pick }}</span></li>
+                  <li class="collection-item" v-if="viewTeam">DST: <span v-if="viewTeam.te">{{ viewTeam.dst.Player }}</span><span class="right" v-if="viewTeam.dst">{{ viewTeam.dst.Round }}.{{ viewTeam.dst.Pick }}</span></li>
+                </ul>
+              </div>
+              <div class="col m4 l4">
+                <ul class="collection">
+                  <li class="collection-item">Name: <span v-if="activeInfo">{{ activeInfo.Player }}</span></li>
+                  <li class="collection-item">Team: <span v-if="activeInfo">{{ activeInfo.Tm }}</span></li>
+                  <li class="collection-item">Pos: <span v-if="activeInfo">{{ activeInfo.FantPos }}</span></li>
+                  <li class="collection-item">Ov. Rank: <span v-if="activeInfo">{{ activeInfo.Rk }}</span></li>
+                  <li class="collection-item">Pos. Rank: <span v-if="activeInfo">{{ activeInfo.PosRank }}</span></li>
+                  <li class="collection-item">Games: <span v-if="activeInfo">{{ activeInfo.G }}</span></li>
+                  <li class="collection-item">PPR: <span v-if="activeInfo">{{ activeInfo.PPR }}</span></li>
+                  <li class="collection-item">PPR/Game: <span v-if="activeInfo">{{ (activeInfo.PPR / activeInfo.G) | round(2) }}</span></li>
+                  <li class="collection-item">VBD: <span v-if="activeInfo">{{ activeInfo.VBD }}</span></li>
+                  <li class="collection-item">
+                    <div class="white-text" v-if="!activeInfo">Test</div>
+                    <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Rushing Attempts: {{ activeInfo.Att__1 }}</span></div>
+                  </li>
+                  <li class="collection-item">
+                    <div class="white-text" v-if="!activeInfo">Test</div>
+                    <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Rushing Yards: {{ activeInfo.Yds__1 }}</span></div>
+                  </li>
+                  <li class="collection-item">
+                    <div class="white-text" v-if="!activeInfo">Test</div>
+                    <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Rushing TD: {{ activeInfo.TD__1 }}</span></div>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -221,7 +258,7 @@
         </div>
       </div>
 
-      <div class="row top">
+      <!-- <div class="row top">
         <div class="col s10 m4 l4 offset-m4 offset-l4">
           <div class="card teal darken-3 z-depth-2">
             <div class="card-content white-text">
@@ -238,44 +275,7 @@
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col m8 l8 offset-m2 offset-l2 teal darken-3 z-depth-2">
-          <div class="row">
-            <h5 class="center white-text">Your Team</h5>
-            <div class="divider center-align"></div>
-          </div>
-
-          <div class="row">
-
-            <div class="col m4 l4">
-              <ul class="collection">
-                <li class="collection-item"><em>QB: </em><span v-if="userTeam.qb">{{ userTeam.qb.Player }}</span><span class="right" v-if="userTeam.qb">{{ userTeam.qb.Tm }}</span></li>
-                <li class="collection-item"><em>RB1: </em><span v-if="userTeam.rb[0]">{{ userTeam.rb[0].Player }}</span><span class="right" v-if="userTeam.rb[0]">{{ userTeam.rb[0].Tm }}</span></li>
-                <li class="collection-item"><em>RB2: </em><span v-if="userTeam.rb[1]">{{ userTeam.rb[1].Player }}</span><span class="right" v-if="userTeam.rb[1]">{{ userTeam.rb[1].Tm }}</span></li>
-                <li class="collection-item"><em>RB3: </em><span v-if="userTeam.rb[2]">{{ userTeam.rb[2].Player }}</span><span class="right" v-if="userTeam.rb[2]">{{ userTeam.rb[2].Tm }}</span></li>
-              </ul>
-            </div>
-            <div class="col m4 l4">
-              <ul class="collection">
-                <li class="collection-item"><em>TE: </em><span v-if="userTeam.te">{{ userTeam.te.Player }}</span><span class="right" v-if="userTeam.te">{{ userTeam.te.Tm }}</span></li>
-                <li class="collection-item"><em>WR1: </em><span v-if="userTeam.wr[0]">{{ userTeam.wr[0].Player }}</span><span class="right" v-if="userTeam.wr[0]">{{ userTeam.wr[0].Tm }}</span></li>
-                <li class="collection-item"><em>WR2: </em><span v-if="userTeam.wr[1]">{{ userTeam.wr[1].Player }}</span><span class="right" v-if="userTeam.wr[1]">{{ userTeam.wr[1].Tm }}</span></li>
-                <li class="collection-item"><em>WR3: </em><span v-if="userTeam.wr[2]">{{ userTeam.wr[2].Player }}</span><span class="right" v-if="userTeam.wr[2]">{{ userTeam.wr[2].Tm }}</span></li>
-              </ul>
-            </div>
-            <div class="col m4 l4">
-              <ul class="collection">
-                <li class="collection-item"><em>K: </em><span v-if="userTeam.k">{{ userTeam.k.Player }}</span><span class="right" v-if="userTeam.k">{{ userTeam.k.Tm }}</span></li>
-                <li class="collection-item"><em>DST: </em><span v-if="userTeam.dst">{{ userTeam.dst.Player }}</span><span class="right" v-if="userTeam.dst">{{ userTeam.dst.Tm }}</span></li>
-                <li class="collection-item"><em>FLEX1: </em><span v-if="userTeam.flx[0]">{{ userTeam.flx[0].Player }}</span><span class="right" v-if="userTeam.flx[0]">{{ userTeam.flx[0].Tm }}</span></li>
-                <li class="collection-item"><em>FLEX2: </em><span v-if="userTeam.flx[1]">{{ userTeam.flx[1].Player }}</span><span class="right" v-if="userTeam.flx[1]">{{ userTeam.flx[1].Tm }}</span></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      </div> -->
 
       <div class="row">
         <div class="col m8 l8 offset-m2 offset-l2 board ">
@@ -423,7 +423,8 @@
           dst: null
         },
         otherTeams: [],
-        viewTeam: null
+        viewTeam: null,
+        feedStyles: {}
       }
     },
     filters: {
@@ -543,6 +544,9 @@
             i = 0
           }
         }
+
+    },
+    matchHeight() {
 
     },
       cpuDraft(team) {
@@ -673,6 +677,9 @@
     },
     mounted() {
       M.AutoInit()
+
+      let height = document.getElementById('ur-team').clientHeight + 'px';
+      document.getElementById('feed-table').style.height = height;
     }
   }
 </script>
@@ -729,7 +736,7 @@
     position: relative;
     z-index: 2;
   }
-  #your-team {
+  #your-team, #feed {
     width: 90%;
     margin: 0% 0% 5% 5%;
   }
@@ -740,6 +747,16 @@
   li {
     text-align: left;
   }
+  #other-teams {
+    margin: 5% 0% 7% 0%;
+  }
+  h4 {
+    margin-top: 5%;
+  }
+  #feed-table {
+    overflow: auto;
+  }
+
 
 
   /* STYLING FROM BEFORE UI UPDATE */
@@ -766,7 +783,7 @@
   .drafting .progress {
     max-width: 1000px;
   }
-  .drafting .feed, .center-ui, .team-info {
+  .feed, .center-ui, .team-info {
     height: 72.5vh;
     overflow: auto;
   }
@@ -777,7 +794,7 @@
     height: 40vh;
     overflow: auto;
   }
-  .drafting .player-info {
+   .player-info {
     font-size: 0.9em;
   }
   .drafting .divider {
