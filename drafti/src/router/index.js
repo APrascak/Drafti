@@ -21,8 +21,8 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'Home',
-      component: Home
+      name: 'Landing',
+      component: Landing
     },
     {
       path: '/mockdraft',
@@ -53,9 +53,9 @@ const router = new Router({
       component: Login
     },
     {
-      path: '/Landing',
-      name: 'Landing',
-      component: Landing
+      path: '/Home',
+      name: 'Home',
+      component: Home
     },
     {
       path: '/PlayerHistory',
@@ -96,11 +96,6 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
-    },
-    {
-      path: '/Landing',
-      name: 'Landing',
-      component: Landing
     }
   ]
 })

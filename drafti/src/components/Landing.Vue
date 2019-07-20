@@ -3,7 +3,7 @@
     <h1 class="white-text">Welcome to Drafti</h1>
     <div class="divider"></div>
     <h4 class="white-text">Fantasy Football Resources</h4>
-    <h5><router-link class="white-text" :to="{ name: 'TheDraft' }">Mock Draft</router-link></h5>
+    <h5><router-link class="white-text" :to="{ name: 'MockDraft' }">Mock Draft</router-link></h5>
     <h5 class="white-text">Fantasy Statistics</h5>
     <h5 class="white-text">And More....</h5>
     <button class="btn black"><span><router-link class="white-text" :to="{ name: 'Login' }">Login</router-link></span></button>

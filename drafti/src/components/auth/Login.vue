@@ -3,7 +3,7 @@
     <h1 class="center"><router-link class="white-text" :to="{ name: 'Landing' }">Drafti</router-link></h1>
     <div class="divider"></div>
     <div id="navrow" class="row">
-      <span><router-link class="white-text" :to="{ name: 'TheDraft' }">Mock Draft</router-link></span>
+      <span><router-link class="white-text" :to="{ name: 'MockDraft' }">Mock Draft</router-link></span>
       <span><router-link class="white-text" :to="{ name: 'Landing' }">Statistics</router-link></span>
       <span><router-link class="white-text" :to="{ name: 'Landing' }">More</router-link></span>
       <span><router-link class="white-text" :to="{ name: 'Landing' }">Profile</router-link></span>

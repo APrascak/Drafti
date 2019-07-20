@@ -1,7 +1,7 @@
 <template id="">
   <div class="my-container">
     <div class="content">
-      <h1><router-link class="white-text" :to="{ name: 'Landing' }">Drafti</router-link></h1>
+      <h1><router-link class="white-text" :to="{ name: 'Home' }">Drafti</router-link></h1>
       <div class="divider"></div>
       <div id="navrow" class="row">
         <span><router-link class="white-text" :to="{ name: 'Landing' }">Mock Draft</router-link></span>
@@ -10,7 +10,7 @@
         <span><router-link class="white-text" :to="{ name: 'Landing' }">Profile</router-link></span>
       </div>
       <div class="row">
-        
+
       </div>
     </div>
     <img src="../assets/Background-PaintedField.jpg">
