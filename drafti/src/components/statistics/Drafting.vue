@@ -258,40 +258,24 @@
         </div>
       </div>
 
-      <!-- <div class="row top">
-        <div class="col s10 m4 l4 offset-m4 offset-l4">
-          <div class="card teal darken-3 z-depth-2">
-            <div class="card-content white-text">
-              <div class="row top-ui">
-                <div class="col m6 l6 top-left">
-                  <div class="in-top">Number of Players: {{ draftParams.playerNum }}</div>
-                  <div class="in-top">Draft Position: {{ draftParams.pickPos }}</div>
-                </div>
-                <div class="col m6 l6 top-left">
-                  <div class="in-top">Current Round: {{ currRound }}</div>
-                  <div class="in-top">Current Pick: {{ currPick }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
       <div class="row">
-        <div class="col m8 l8 offset-m2 offset-l2 board ">
+        <div class="col m8 l8 offset-m2 offset-l2 board card white hoverable">
           <div class="row">
-            <div class="col m8 l8">
-              <h5 class="center teal-text">On The Board</h5>
+            <div class="col m4 l4">
+              <h5 class="center black-text">On The Board</h5>
             </div>
             <div class="col m4 l4">
               <input type="text" name="playerSearch" placeholder="Player Name" v-model="playerSearch">
+            </div>
+            <div class="col m4 l4">
+              <h5 class="black-text">Draft Feed</h5>
             </div>
           </div>
           <div class="row">
             <div class="col m8 l8 players">
               <ul class="collection">
                 <li class="collection-item" v-for="player in stat2018" v-if="player.Player.toLowerCase().includes(playerSearch.toLowerCase())"
-                v-bind:class="{ teal: player == activeInfo, 'darken-3': player == activeInfo }"
+                v-bind:class="{ black: player == activeInfo, 'white-text': player == activeInfo }"
                 @click="display(player)">
                   {{ player.Player }}
                 </li>
@@ -301,41 +285,20 @@
               <div class="center">
                 <button @click="draft(activeInfo)" class="btn teal darken-4">Draft</button>
               </div>
-              <ul class="collection">
-                <li class="collection-item">Name: <span v-if="activeInfo">{{ activeInfo.Player }}</span></li>
-                <li class="collection-item">Team: <span v-if="activeInfo">{{ activeInfo.Tm }}</span></li>
-                <li class="collection-item">Pos: <span v-if="activeInfo">{{ activeInfo.FantPos }}</span></li>
-                <li class="collection-item">Ov. Rank: <span v-if="activeInfo">{{ activeInfo.Rk }}</span></li>
-                <li class="collection-item">Pos. Rank: <span v-if="activeInfo">{{ activeInfo.PosRank }}</span></li>
-                <li class="collection-item">Games: <span v-if="activeInfo">{{ activeInfo.G }}</span></li>
-                <li class="collection-item">PPR: <span v-if="activeInfo">{{ activeInfo.PPR }}</span></li>
-                <li class="collection-item">PPR/Game: <span v-if="activeInfo">{{ (activeInfo.PPR / activeInfo.G) | round(2) }}</span></li>
-                <li class="collection-item">VBD: <span v-if="activeInfo">{{ activeInfo.VBD }}</span></li>
-                <li class="collection-item">
-                  <div class="white-text" v-if="!activeInfo">Test</div>
-                  <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Rushing Attempts: {{ activeInfo.Att__1 }}</span></div>
-                </li>
-                <li class="collection-item">
-                  <div class="white-text" v-if="!activeInfo">Test</div>
-                  <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Rushing Yards: {{ activeInfo.Yds__1 }}</span></div>
-                </li>
-                <li class="collection-item">
-                  <div class="white-text" v-if="!activeInfo">Test</div>
-                  <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Rushing TD: {{ activeInfo.TD__1 }}</span></div>
-                </li>
-                <li class="collection-item">
-                  <div class="white-text" v-if="!activeInfo">Test</div>
-                  <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Receptions: {{ activeInfo.Rec }}</span></div>
-                </li>
-                <li class="collection-item">
-                  <div class="white-text" v-if="!activeInfo">Test</div>
-                  <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Receiving Yards: {{ activeInfo.Yds__2 }}</span></div>
-                </li>
-                <li class="collection-item">
-                  <div class="white-text" v-if="!activeInfo">Test</div>
-                  <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Receiving TD: {{ activeInfo.TD__2 }}</span></div>
-                </li>
-              </ul>
+              <table>
+                <thead>
+                  <th>Pos</th>
+                  <th>Name</th>
+                  <th>Pick</th>
+                </thead>
+                <tbody class="white black-text">
+                  <tr v-for="player in picks.slice().reverse()" :key="player.OvPick">
+                    <td>{{ player.FantPos }}</td>
+                    <td>{{ player.Player }}</td>
+                    <td>{{ player.Round }}.{{ player.Pick}}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
@@ -677,9 +640,6 @@
     },
     mounted() {
       M.AutoInit()
-
-      let height = document.getElementById('ur-team').clientHeight + 'px';
-      document.getElementById('feed-table').style.height = height;
     }
   }
 </script>
