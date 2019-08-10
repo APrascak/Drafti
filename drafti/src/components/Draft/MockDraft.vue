@@ -1,7 +1,7 @@
 <template>
   <div class="my-container">
     <div id="content">
-      <h1 class="center"><router-link class="white-text" :to="{ name: 'Landing' }">Drafti</router-link></h1>
+      <h1 class="center"><router-link class="white-text" :to="{ name: 'Home' }">Drafti</router-link></h1>
       <div class="divider"></div>
       <div id="navrow" class="row">
         <span><router-link class="white-text" :to="{ name: 'MockDraft' }">Mock Draft</router-link></span>

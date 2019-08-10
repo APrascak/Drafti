@@ -11,34 +11,24 @@
     <div class="row">
       <div class="col m4 l4 offset-m4 offset-l4">
         <div class="card-panel white z-depth-3">
-          <h4><router-link class="black-text" :to="{ name: 'MockDraft'}">Mock Draft</router-link></h4>
-          <div class="divider" id="home-divider"></div>
-          <h4><router-link class="black-text" :to="{ name: 'Statistics'}">Statistics</router-link></h4>
+          <p>Check out Drafti's different statistical pages here:</p>
         </div>
       </div>
     </div>
-    <img src="../assets/Background-PaintedField.jpg">
+    <img src="../../assets/Background-PaintedField.jpg">
   </div>
 </template>
 
-<script>
+<script type="text/javascript">
   import slugify from 'slugify'
   import db from '@/firebase/init'
   import firebase from 'firebase'
 
   export default {
-    name: 'Home',
+    name: 'Statistics',
     data() {
       return {
-        user: null,
-        feedback: null
-      }
-    },
-    methods: {
-      logout() {
-        firebase.auth().signOut().then(() => {
-          this.$router.push({ name: 'Landing' })
-        })
+        user: null
       }
     },
     created() {
@@ -55,12 +45,12 @@
       })
     },
     mounted() {
-      M.AutoInit() // That way, it is only initialized when the component is mounted
+      M.AutoInit()
     }
   }
 </script>
 
-<style scoped>
+<style media="screen">
   .my-container {
     position: relative;
     overflow: hidden;
@@ -103,13 +93,5 @@
   .card-panel {
     z-index: 2;
     position: relative;
-  }
-  #home-divider {
-    width: 50%;
-    margin-left: 25%;
-    margin-bottom: 0%;
-  }
-  .card-panel h4 {
-    padding: 5% 0% 5% 0%;
   }
 </style>

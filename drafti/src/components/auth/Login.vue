@@ -5,8 +5,7 @@
     <div id="navrow" class="row">
       <span><router-link class="white-text" :to="{ name: 'MockDraft' }">Mock Draft</router-link></span>
       <span><router-link class="white-text" :to="{ name: 'Landing' }">Statistics</router-link></span>
-      <span><router-link class="white-text" :to="{ name: 'Landing' }">More</router-link></span>
-      <span><router-link class="white-text" :to="{ name: 'Landing' }">Profile</router-link></span>
+      <span><router-link class="white-text" :to="{ name: 'SignUp' }">Sign Up</router-link></span>
     </div>
     <div class="row">
       <div class="col m4 l4 offset-m4 offset-l4">
@@ -33,6 +32,7 @@
 </template>
 
 <script type="text/javascript">
+  import slugify from 'slugify'
   import db from '@/firebase/init'
   import firebase from 'firebase'
 
@@ -42,7 +42,8 @@
       return {
         email: null,
         password: null,
-        feedback: null
+        feedback: null,
+        user: null
       }
     },
     methods: {
@@ -61,6 +62,27 @@
           this.feedback = 'Please fill in both fields.'
         }
       }
+    },
+    created() {
+      let ref = db.collection('users')
+
+      // Get the current user
+      ref.where('user_id', '==', firebase.auth().currentUser.uid).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          this.user = doc.data(),
+          this.user.id = doc.id
+          console.log(this.user)
+        })
+      }).then(() => {
+        if (this.user) {
+          this.$router.push({name: 'Home'})
+        }
+      })
+
+    },
+    mounted() {
+      M.AutoInit()
     }
   }
 </script>

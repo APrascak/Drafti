@@ -1,11 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import MockDraft from '@/components/statistics/MockDraft'
-import Drafting from '@/components/statistics/Drafting'
+import MockDraft from '@/components/Draft/MockDraft'
+import Drafting from '@/components/Draft/Drafting'
 import Home from '@/components/Home'
 import SignUp from '@/components/auth/Signup'
 import Login from '@/components/auth/Login'
 import ViewProfile from '@/components/auth/Profile'
+import Statistics from '@/components/statistics/Statistics'
 import PlayerHistory from '@/components/statistics/PlayerHistory'
 import Visualization from '@/components/statistics/Visualization'
 import PlayerLookup from '@/components/statistics/PlayerLookup'
@@ -33,11 +34,6 @@ const router = new Router({
       path: '/signup',
       name: 'SignUp',
       component: SignUp
-    },
-    {
-      path: '/TheDraft',
-      name: 'TheDraft',
-      component: TheDraft
     },
     {
       path: '/ViewProfile/:id',
@@ -77,6 +73,14 @@ const router = new Router({
       path: '/Drafting',
       name: 'Drafting',
       component: Drafting,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/Statistics',
+      name: 'Statistics',
+      component: Statistics,
       meta: {
         requiresAuth: true
       }

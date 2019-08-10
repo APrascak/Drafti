@@ -19,7 +19,7 @@
                 <h4 class="teal-text text-darken-4">Your Team</h4>
                 <div class="divider" id="your-team"></div>
               </div>
-              <div class="col m4 l4">
+              <div class="col m4 l4 dropdown-choice">
                 <a class='dropdown-trigger btn center black' data-target='dropdown1' id="other-teams">View Other Teams</a>
                 <ul id='dropdown1' class='dropdown-content'>
                   <li @click="displayTeam(team)" v-for="team in otherTeams" class="black-text"><a class="black-text">Team # {{ team.name }}</a></li>
@@ -177,8 +177,7 @@
           dst: null
         },
         otherTeams: [],
-        viewTeam: null,
-        feedStyles: {}
+        viewTeam: null
       }
     },
     filters: {
@@ -245,7 +244,6 @@
         } else {
           this.currPick++
           var i
-          // way up
           if (this.currRound % 2 == 1) {
             for (i = this.currPick; i <= this.draftParams.playerNum; i++) {
               this.cpuDraft(this.otherTeams[i-2])
@@ -254,7 +252,6 @@
               this.cpuDraft(this.otherTeams[this.draftParams.playerNum - this.currPick-1])
             }
           } else {
-            // way down
             for (i = this.currPick; i <= this.draftParams.playerNum; i++) {
               this.cpuDraft(this.otherTeams[this.draftParams.playerNum - this.currPick])
             }
@@ -462,6 +459,7 @@
   }
   #other-teams {
     margin: 5% 0% 7% 0%;
+    z-index: 3;
   }
   h4 {
     margin-top: 5%;
@@ -469,6 +467,7 @@
   #feed-table {
     overflow: auto;
   }
+  
 
 
 
