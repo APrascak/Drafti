@@ -1,170 +1,5 @@
 <template>
-  <!-- <div class="drafting grey lighten-3">
 
-    <div class="row top">
-      <div class="col s10 m4 l4 offset-m4 offset-l4">
-        <div class="card teal darken-3 z-depth-2">
-          <div class="card-content white-text">
-            <div class="row top-ui">
-              <div class="col m6 l6 top-left">
-                <div class="in-top">Number of Players: {{ draftParams.playerNum }}</div>
-                <div class="in-top">Draft Position: {{ draftParams.pickPos }}</div>
-              </div>
-              <div class="col m6 l6 top-left">
-                <div class="in-top">Current Round: {{ currRound }}</div>
-                <div class="in-top">Current Pick: {{ currPick }}</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col m8 l8 offset-m2 offset-l2 teal darken-3 z-depth-2">
-        <div class="row">
-          <h5 class="center white-text">Your Team</h5>
-          <div class="divider center-align"></div>
-        </div>
-
-        <div class="row">
-
-          <div class="col m4 l4">
-            <ul class="collection">
-              <li class="collection-item"><em>QB: </em><span v-if="userTeam.qb">{{ userTeam.qb.Player }}</span><span class="right" v-if="userTeam.qb">{{ userTeam.qb.Tm }}</span></li>
-              <li class="collection-item"><em>RB1: </em><span v-if="userTeam.rb[0]">{{ userTeam.rb[0].Player }}</span><span class="right" v-if="userTeam.rb[0]">{{ userTeam.rb[0].Tm }}</span></li>
-              <li class="collection-item"><em>RB2: </em><span v-if="userTeam.rb[1]">{{ userTeam.rb[1].Player }}</span><span class="right" v-if="userTeam.rb[1]">{{ userTeam.rb[1].Tm }}</span></li>
-              <li class="collection-item"><em>RB3: </em><span v-if="userTeam.rb[2]">{{ userTeam.rb[2].Player }}</span><span class="right" v-if="userTeam.rb[2]">{{ userTeam.rb[2].Tm }}</span></li>
-            </ul>
-          </div>
-          <div class="col m4 l4">
-            <ul class="collection">
-              <li class="collection-item"><em>TE: </em><span v-if="userTeam.te">{{ userTeam.te.Player }}</span><span class="right" v-if="userTeam.te">{{ userTeam.te.Tm }}</span></li>
-              <li class="collection-item"><em>WR1: </em><span v-if="userTeam.wr[0]">{{ userTeam.wr[0].Player }}</span><span class="right" v-if="userTeam.wr[0]">{{ userTeam.wr[0].Tm }}</span></li>
-              <li class="collection-item"><em>WR2: </em><span v-if="userTeam.wr[1]">{{ userTeam.wr[1].Player }}</span><span class="right" v-if="userTeam.wr[1]">{{ userTeam.wr[1].Tm }}</span></li>
-              <li class="collection-item"><em>WR3: </em><span v-if="userTeam.wr[2]">{{ userTeam.wr[2].Player }}</span><span class="right" v-if="userTeam.wr[2]">{{ userTeam.wr[2].Tm }}</span></li>
-            </ul>
-          </div>
-          <div class="col m4 l4">
-            <ul class="collection">
-              <li class="collection-item"><em>K: </em><span v-if="userTeam.k">{{ userTeam.k.Player }}</span><span class="right" v-if="userTeam.k">{{ userTeam.k.Tm }}</span></li>
-              <li class="collection-item"><em>DST: </em><span v-if="userTeam.dst">{{ userTeam.dst.Player }}</span><span class="right" v-if="userTeam.dst">{{ userTeam.dst.Tm }}</span></li>
-              <li class="collection-item"><em>FLEX1: </em><span v-if="userTeam.flx[0]">{{ userTeam.flx[0].Player }}</span><span class="right" v-if="userTeam.flx[0]">{{ userTeam.flx[0].Tm }}</span></li>
-              <li class="collection-item"><em>FLEX2: </em><span v-if="userTeam.flx[1]">{{ userTeam.flx[1].Player }}</span><span class="right" v-if="userTeam.flx[1]">{{ userTeam.flx[1].Tm }}</span></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-
-      <div class="row">
-        <div class="col m8 l8 offset-m2 offset-l2 board ">
-          <div class="row">
-            <div class="col m8 l8">
-              <h5 class="center teal-text">On The Board</h5>
-            </div>
-            <div class="col m4 l4">
-              <input type="text" name="playerSearch" placeholder="Player Name" v-model="playerSearch">
-            </div>
-          </div>
-          <div class="row">
-            <div class="col m8 l8 players">
-              <ul class="collection">
-                <li class="collection-item" v-for="player in stat2018" v-if="player.Player.toLowerCase().includes(playerSearch.toLowerCase())"
-                v-bind:class="{ teal: player == activeInfo, 'darken-3': player == activeInfo }"
-                @click="display(player)">
-                  {{ player.Player }}
-                </li>
-              </ul>
-            </div>
-            <div class="col m4 l4 players">
-              <div class="center">
-                <button @click="draft(activeInfo)" class="btn teal darken-4">Draft</button>
-              </div>
-              <ul class="collection">
-                <li class="collection-item">Name: <span v-if="activeInfo">{{ activeInfo.Player }}</span></li>
-                <li class="collection-item">Team: <span v-if="activeInfo">{{ activeInfo.Tm }}</span></li>
-                <li class="collection-item">Pos: <span v-if="activeInfo">{{ activeInfo.FantPos }}</span></li>
-                <li class="collection-item">Ov. Rank: <span v-if="activeInfo">{{ activeInfo.Rk }}</span></li>
-                <li class="collection-item">Pos. Rank: <span v-if="activeInfo">{{ activeInfo.PosRank }}</span></li>
-                <li class="collection-item">Games: <span v-if="activeInfo">{{ activeInfo.G }}</span></li>
-                <li class="collection-item">PPR: <span v-if="activeInfo">{{ activeInfo.PPR }}</span></li>
-                <li class="collection-item">PPR/Game: <span v-if="activeInfo">{{ (activeInfo.PPR / activeInfo.G) | round(2) }}</span></li>
-                <li class="collection-item">VBD: <span v-if="activeInfo">{{ activeInfo.VBD }}</span></li>
-                <li class="collection-item">
-                  <div class="white-text" v-if="!activeInfo">Test</div>
-                  <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Rushing Attempts: {{ activeInfo.Att__1 }}</span></div>
-                </li>
-                <li class="collection-item">
-                  <div class="white-text" v-if="!activeInfo">Test</div>
-                  <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Rushing Yards: {{ activeInfo.Yds__1 }}</span></div>
-                </li>
-                <li class="collection-item">
-                  <div class="white-text" v-if="!activeInfo">Test</div>
-                  <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Rushing TD: {{ activeInfo.TD__1 }}</span></div>
-                </li>
-                <li class="collection-item">
-                  <div class="white-text" v-if="!activeInfo">Test</div>
-                  <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Receptions: {{ activeInfo.Rec }}</span></div>
-                </li>
-                <li class="collection-item">
-                  <div class="white-text" v-if="!activeInfo">Test</div>
-                  <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Receiving Yards: {{ activeInfo.Yds__2 }}</span></div>
-                </li>
-                <li class="collection-item">
-                  <div class="white-text" v-if="!activeInfo">Test</div>
-                  <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Receiving TD: {{ activeInfo.TD__2 }}</span></div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-    <div class="row">
-      <!-- Left hand of UI for Draft Feed -->
-      <!-- <div class="col m4 l4 offset-m2 offset-l2 feed">
-        <h4 class="center">Draft Feed</h4>
-        <table>
-          <thead>
-            <th>Pos</th>
-            <th>Name</th>
-            <th>Pick</th>
-          </thead>
-          <tbody>
-            <tr v-for="player in picks.slice().reverse()" :key="player.OvPick">
-              <td>{{ player.FantPos }}</td>
-              <td>{{ player.Player }}</td>
-              <td>{{ player.Round }}.{{ player.Pick}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="col m4 l4">
-        <div class="center">
-          <a class='dropdown-trigger btn center' data-target='dropdown1'>View Other Teams</a>
-          <ul id='dropdown1' class='dropdown-content'>
-            <li @click="displayTeam(team)" v-for="team in otherTeams"><a>Team # {{ team.name }}</a></li>
-          </ul>
-        </div>
-        <ul class="collection">
-          <li class="collection-item" v-if="viewTeam">QB: <span v-if="viewTeam.qb">{{ viewTeam.qb.Player }}</span><span class="right" v-if="viewTeam.qb">{{ viewTeam.qb.Tm }}</span></li>
-          <li class="collection-item" v-if="viewTeam">RB1: <span v-if="viewTeam.rb[0]">{{ viewTeam.rb[0].Player }}</span><span class="right" v-if="viewTeam.rb[0]">{{ viewTeam.rb[0].Tm }}</span></li>
-          <li class="collection-item" v-if="viewTeam">RB2: <span v-if="viewTeam.rb[1]">{{ viewTeam.rb[1].Player }}</span><span class="right" v-if="viewTeam.rb[1]">{{ viewTeam.rb[1].Tm }}</span></li>
-          <li class="collection-item" v-if="viewTeam">RB3: <span v-if="viewTeam.rb[2]">{{ viewTeam.rb[2].Player }}</span><span class="right" v-if="viewTeam.rb[2]">{{ viewTeam.rb[2].Tm }}</span></li>
-          <li class="collection-item" v-if="viewTeam">WR1: <span v-if="viewTeam.wr[0]">{{ viewTeam.wr[0].Player }}</span><span class="right" v-if="viewTeam.wr[0]">{{ viewTeam.wr[0].Tm }}</span></li>
-          <li class="collection-item" v-if="viewTeam">WR2: <span v-if="viewTeam.wr[1]">{{ viewTeam.wr[1].Player }}</span><span class="right" v-if="viewTeam.wr[1]">{{ viewTeam.wr[1].Tm }}</span></li>
-          <li class="collection-item" v-if="viewTeam">WR3: <span v-if="viewTeam.wr[2]">{{ viewTeam.wr[2].Player }}</span><span class="right" v-if="viewTeam.wr[2]">{{ viewTeam.wr[2].Tm }}</span></li>
-          <li class="collection-item" v-if="viewTeam">TE: <span v-if="viewTeam.te">{{ viewTeam.te.Player }}</span><span class="right" v-if="viewTeam.qb">{{ viewTeam.te.Tm }}</span></li>
-          <li class="collection-item" v-if="viewTeam">FLEX1: <span v-if="viewTeam.flx[0]">{{ viewTeam.flx[0].Player }}</span><span class="right" v-if="viewTeam.flx[0]">{{ viewTeam.flx[0].Tm }}</span></li>
-          <li class="collection-item" v-if="viewTeam">FLEX2: <span v-if="viewTeam.flx[1]">{{ viewTeam.flx[1].Player }}</span><span class="right" v-if="viewTeam.flx[1]">{{ viewTeam.flx[1].Tm }}</span></li>
-
-        </ul>
-      </div>
-    </div>
-
-  </div> -->
   <div class="my-container">
     <div id="content">
       <h1 class="center"><router-link class="white-text" :to="{ name: 'Landing' }">Drafti</router-link></h1>
@@ -224,8 +59,8 @@
                   <li class="collection-item" v-if="viewTeam">TE: <span v-if="viewTeam.te">{{ viewTeam.te.Player }}</span><span class="right" v-if="viewTeam.te">{{ viewTeam.te.Round }}.{{ viewTeam.te.Pick }}</span></li>
                   <li class="collection-item" v-if="viewTeam">FLEX1: <span v-if="viewTeam.flx[0]">{{ viewTeam.flx[0].Player }}</span><span class="right" v-if="viewTeam.flx[0]">{{ viewTeam.flx[0].Round }}.{{ viewTeam.flx[0].Pick }}</span></li>
                   <li class="collection-item" v-if="viewTeam">FLEX2: <span v-if="viewTeam.flx[1]">{{ viewTeam.flx[1].Player }}</span><span class="right" v-if="viewTeam.flx[1]">{{ viewTeam.flx[1].Round }}.{{ viewTeam.flx[1].Pick }}</span></li>
-                  <li class="collection-item" v-if="viewTeam">K: <span v-if="viewTeam.te">{{ viewTeam.k.Player }}</span><span class="right" v-if="viewTeam.k">{{ viewTeam.k.Round }}.{{ viewTeam.k.Pick }}</span></li>
-                  <li class="collection-item" v-if="viewTeam">DST: <span v-if="viewTeam.te">{{ viewTeam.dst.Player }}</span><span class="right" v-if="viewTeam.dst">{{ viewTeam.dst.Round }}.{{ viewTeam.dst.Pick }}</span></li>
+                  <li class="collection-item" v-if="viewTeam">K: <span v-if="null">{{ viewTeam.k.Player }}</span><span class="right" v-if="viewTeam.k">{{ viewTeam.k.Round }}.{{ viewTeam.k.Pick }}</span></li>
+                  <li class="collection-item" v-if="viewTeam">DST: <span v-if="null">{{ viewTeam.dst.Player }}</span><span class="right" v-if="viewTeam.dst">{{ viewTeam.dst.Round }}.{{ viewTeam.dst.Pick }}</span></li>
                 </ul>
               </div>
               <div class="col m4 l4">
@@ -304,50 +139,6 @@
         </div>
       </div>
 
-      <div class="row">
-        <!-- Left hand of UI for Draft Feed -->
-        <div class="col m4 l4 offset-m2 offset-l2 feed">
-          <div class="card black white-text">
-            <h4 class="center">Draft Feed</h4>
-            <table>
-              <thead>
-                <th>Pos</th>
-                <th>Name</th>
-                <th>Pick</th>
-              </thead>
-              <tbody class="white black-text">
-                <tr v-for="player in picks.slice().reverse()" :key="player.OvPick">
-                  <td>{{ player.FantPos }}</td>
-                  <td>{{ player.Player }}</td>
-                  <td>{{ player.Round }}.{{ player.Pick}}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div class="col m4 l4">
-          <div class="center">
-            <a class='dropdown-trigger btn center' data-target='dropdown1'>View Other Teams</a>
-            <ul id='dropdown1' class='dropdown-content'>
-              <li @click="displayTeam(team)" v-for="team in otherTeams"><a>Team # {{ team.name }}</a></li>
-            </ul>
-          </div>
-          <ul class="collection">
-            <li class="collection-item" v-if="viewTeam">QB: <span v-if="viewTeam.qb">{{ viewTeam.qb.Player }}</span><span class="right" v-if="viewTeam.qb">{{ viewTeam.qb.Tm }}</span></li>
-            <li class="collection-item" v-if="viewTeam">RB1: <span v-if="viewTeam.rb[0]">{{ viewTeam.rb[0].Player }}</span><span class="right" v-if="viewTeam.rb[0]">{{ viewTeam.rb[0].Tm }}</span></li>
-            <li class="collection-item" v-if="viewTeam">RB2: <span v-if="viewTeam.rb[1]">{{ viewTeam.rb[1].Player }}</span><span class="right" v-if="viewTeam.rb[1]">{{ viewTeam.rb[1].Tm }}</span></li>
-            <li class="collection-item" v-if="viewTeam">RB3: <span v-if="viewTeam.rb[2]">{{ viewTeam.rb[2].Player }}</span><span class="right" v-if="viewTeam.rb[2]">{{ viewTeam.rb[2].Tm }}</span></li>
-            <li class="collection-item" v-if="viewTeam">WR1: <span v-if="viewTeam.wr[0]">{{ viewTeam.wr[0].Player }}</span><span class="right" v-if="viewTeam.wr[0]">{{ viewTeam.wr[0].Tm }}</span></li>
-            <li class="collection-item" v-if="viewTeam">WR2: <span v-if="viewTeam.wr[1]">{{ viewTeam.wr[1].Player }}</span><span class="right" v-if="viewTeam.wr[1]">{{ viewTeam.wr[1].Tm }}</span></li>
-            <li class="collection-item" v-if="viewTeam">WR3: <span v-if="viewTeam.wr[2]">{{ viewTeam.wr[2].Player }}</span><span class="right" v-if="viewTeam.wr[2]">{{ viewTeam.wr[2].Tm }}</span></li>
-            <li class="collection-item" v-if="viewTeam">TE: <span v-if="viewTeam.te">{{ viewTeam.te.Player }}</span><span class="right" v-if="viewTeam.qb">{{ viewTeam.te.Tm }}</span></li>
-            <li class="collection-item" v-if="viewTeam">FLEX1: <span v-if="viewTeam.flx[0]">{{ viewTeam.flx[0].Player }}</span><span class="right" v-if="viewTeam.flx[0]">{{ viewTeam.flx[0].Tm }}</span></li>
-            <li class="collection-item" v-if="viewTeam">FLEX2: <span v-if="viewTeam.flx[1]">{{ viewTeam.flx[1].Player }}</span><span class="right" v-if="viewTeam.flx[1]">{{ viewTeam.flx[1].Tm }}</span></li>
-
-          </ul>
-        </div>
-      </div>
-
     </div>
     <img src="../../assets/Background-PaintedField.jpg">
   </div>
@@ -398,120 +189,82 @@
         this.activeInfo = player
       },
       draft(player) {
-        // Conditional for RB drafting
-        if (player.FantPos == 'RB' && this.userTeam.rb.length < this.draftParams.rbNum) {
-          // Add to team.
-          this.userTeam.rb.push(player)
-          // Add round.pick
+
+        if (player.FantPos == 'QB' && !this.userTeam.qb) {
+
           player.Round = this.currRound
           player.Pick = this.currPick
           player.OvPick = (this.currRound * this.draftParams.playerNum) + this.currPick
-          // Add to picks array
-          this.picks.push(player)
-          // Update currPick,currRound
-          if (this.currPick == this.draftParams.playerNum) {
-            this.currRound++
-            this.currPick = 1
-          } else {
-            this.currPick++
-          }
-          // Remove from available players
-          this.stat2018.splice(this.stat2018.indexOf(player),1)
-
-          // Conditional for WR drafting
-        } else if (player.FantPos == 'WR' && this.userTeam.wr.length < this.draftParams.wrNum) {
-          // Add to team.
-          this.userTeam.wr.push(player)
-          // Add round.pick
-          player.Round = this.currRound
-          player.Pick = this.currPick
-          player.OvPick = (this.currRound * this.draftParams.playerNum) + this.currPick
-          // Add to picks array
-          this.picks.push(player)
-          // Update currPick,currRound
-          if (this.currPick == this.draftParams.playerNum) {
-            this.currRound++
-            this.currPick = 1
-          } else {
-            this.currPick++
-          }
-          // Remove from available players
-          this.stat2018.splice(this.stat2018.indexOf(player),1)
-
-          // Conditional for QB drafting
-        } else if (player.FantPos == 'QB' && !this.userTeam.qb) {
-          // Add to team.
           this.userTeam.qb = player
-          // Add round.pick
-          player.Round = this.currRound
-          player.Pick = this.currPick
-          player.OvPick = (this.currRound * this.draftParams.playerNum) + this.currPick
-          // Add to picks array
           this.picks.push(player)
-          // Update currPick,currRound
-          if (this.currPick == this.draftParams.playerNum) {
-            this.currRound++
-            this.currPick = 1
-          } else {
-            this.currPick++
-          }
-          // Remove from available players
-          this.stat2018.splice(this.stat2018.indexOf(player),1)
 
-        } else if (player.FantPos == 'TE' && !this.userTeam.te) { // Conditional for TE drafting
-          // Add to team.
-          this.userTeam.te = player
-          // Add round.pick
+        } else if (player.FantPos == 'RB' && this.userTeam.rb.length < this.draftParams.rbNum) {
+
           player.Round = this.currRound
           player.Pick = this.currPick
           player.OvPick = (this.currRound * this.draftParams.playerNum) + this.currPick
-          // Add to picks array
+          this.userTeam.rb.push(player)
           this.picks.push(player)
-          // Update currPick,currRound
-          if (this.currPick == this.draftParams.playerNum) {
-            this.currRound++
-            this.currPick = 1
-          } else {
-            this.currPick++
-          }
-          // Remove from available players
-          this.stat2018.splice(this.stat2018.indexOf(player),1)
+
+        } else if (player.FantPos == 'WR' && this.userTeam.wr.length < this.draftParams.rbNum) {
+
+          player.Round = this.currRound
+          player.Pick = this.currPick
+          player.OvPick = (this.currRound * this.draftParams.playerNum) + this.currPick
+          this.userTeam.wr.push(player)
+          this.picks.push(player)
+
+        } else if (player.FantPos == 'TE' && !this.userTeam.te) {
+
+          player.Round = this.currRound
+          player.Pick = this.currPick
+          player.OvPick = (this.currRound * this.draftParams.playerNum) + this.currPick
+          this.userTeam.te = player
+          this.picks.push(player)
 
         } else if ((player.FantPos == 'RB' || player.FantPos == 'WR' || player.FantPos == 'TE') && this.userTeam.flx.length < this.draftParams.flxNum) {
-          // Add to team.
-          this.userTeam.flx.push(player)
-          // Add round.pick
+
           player.Round = this.currRound
           player.Pick = this.currPick
           player.OvPick = (this.currRound * this.draftParams.playerNum) + this.currPick
-          // Add to picks array
+          this.userTeam.flx.push(player)
           this.picks.push(player)
-          // Update currPick,currRound
-          if (this.currPick == this.draftParams.playerNum) {
-            this.currRound++
-            this.currPick = 1
-          } else {
-            this.currPick++
-          }
-          // Remove from available players
-          this.stat2018.splice(this.stat2018.indexOf(player),1)
+
+        } else {
+
+          M.toast({html: 'This position is full!'})
+          return null
+
         }
-        var i,j
-        for (i = (Number(this.draftParams.pickPos) + 1); i != Number(this.draftParams.pickPos) ; i++) {
-          for (j = 0; j < this.otherTeams.length; j++) {
-            if (this.otherTeams[j].name == i) {
-              this.cpuDraft(this.otherTeams[j])
+
+        this.stat2018.splice(this.stat2018.indexOf(player),1)
+
+        if (this.currPick == this.draftParams.playerNum) {
+          this.currRound++
+          this.currPick = 1
+        } else {
+          this.currPick++
+          var i
+          // way up
+          if (this.currRound % 2 == 1) {
+            for (i = this.currPick; i <= this.draftParams.playerNum; i++) {
+              this.cpuDraft(this.otherTeams[i-2])
+            }
+            for (i = this.currPick; i <= (this.draftParams.playerNum - this.draftParams.pickPos); i++) {
+              this.cpuDraft(this.otherTeams[this.draftParams.playerNum - this.currPick-1])
+            }
+          } else {
+            // way down
+            for (i = this.currPick; i <= this.draftParams.playerNum; i++) {
+              this.cpuDraft(this.otherTeams[this.draftParams.playerNum - this.currPick])
+            }
+            for (i = this.currPick; i < this.draftParams.pickPos; i++) {
+              this.cpuDraft(this.otherTeams[i-1])
             }
           }
-          if (i == Number(this.draftParams.playerNum)) {
-            i = 0
-          }
         }
 
-    },
-    matchHeight() {
-
-    },
+      },
       cpuDraft(team) {
         var k
         for (k = 0; k < this.stat2018.length; k++) {

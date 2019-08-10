@@ -10,6 +10,7 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "apexcharts": "^3.8.4",
     "chart.js": "^2.8.0",
     "firebase": "^6.1.1",
     "materialize-css": "^1.0.0",
