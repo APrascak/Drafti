@@ -5,9 +5,9 @@
       <div class="divider"></div>
       <div id="navrow" class="row">
         <span><router-link class="white-text" :to="{ name: 'MockDraft' }">Mock Draft</router-link></span>
-        <span><router-link class="white-text" :to="{ name: 'Landing' }">Statistics</router-link></span>
-        <span><router-link class="white-text" :to="{ name: 'Landing' }">More</router-link></span>
-        <span><router-link class="white-text" :to="{ name: 'Landing' }">Profile</router-link></span>
+        <span><router-link class="white-text" :to="{ name: 'Statistics' }">Statistics</router-link></span>
+        <span v-if="user"><router-link class="white-text" :to="{ name: 'Landing' }">{{ user.user_email }}</router-link></span>
+        <span><a href="#" class="white-text" @click="logout">Logout</a></span>
       </div>
       <div class="row">
         <div class="col m4 l4 offset-m4 offset-l4">
@@ -86,6 +86,10 @@
 </template>
 
 <script type="text/javascript">
+  import slugify from 'slugify'
+  import db from '@/firebase/init'
+  import firebase from 'firebase'
+
   export default {
     name: 'MockDraft',
     data() {
@@ -95,14 +99,12 @@
         pickPos: null,
         wrNum: null,
         rbNum: null,
-        flexNum: null
+        flexNum: null,
+        user: null
       }
     },
     methods: {
       createMock() {
-        console.log(this.mockName)
-        console.log(this.playerNum)
-        console.log(this.pickPos)
         this.$router.push({
           name: 'Drafting',
           params: {
@@ -113,7 +115,25 @@
             rbNum: this.rbNum,
             flxNum: this.flexNum
           }})
+      },
+      logout() {
+        firebase.auth().signOut().then(() => {
+          this.$router.push({ name: 'Landing' })
+        })
       }
+    },
+    created() {
+      let ref = db.collection('users')
+
+      // Get the current user
+      ref.where('user_id', '==', firebase.auth().currentUser.uid).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          this.user = doc.data(),
+          this.user.id = doc.id
+          console.log(this.user)
+        })
+      })
     },
     mounted() {
       M.AutoInit()

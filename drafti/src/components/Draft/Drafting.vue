@@ -2,13 +2,13 @@
 
   <div class="my-container">
     <div id="content">
-      <h1 class="center"><router-link class="white-text" :to="{ name: 'Landing' }">Drafti</router-link></h1>
+      <h1 class="center"><router-link class="white-text" :to="{ name: 'Home' }">Drafti</router-link></h1>
       <div class="divider"></div>
       <div id="navrow" class="row">
         <span><router-link class="white-text" :to="{ name: 'MockDraft' }">Mock Draft</router-link></span>
-        <span><router-link class="white-text" :to="{ name: 'Landing' }">Statistics</router-link></span>
-        <span><router-link class="white-text" :to="{ name: 'Landing' }">More</router-link></span>
-        <span><router-link class="white-text" :to="{ name: 'Landing' }">Profile</router-link></span>
+        <span><router-link class="white-text" :to="{ name: 'Statistics' }">Statistics</router-link></span>
+        <span v-if="user"><router-link class="white-text" :to="{ name: 'Home' }">{{ user.user_email }}</router-link></span>
+        <span><a href="#" class="white-text" @click="logout">Logout</a></span>
       </div>
 
       <div class="row">
@@ -19,11 +19,9 @@
                 <h4 class="teal-text text-darken-4">Your Team</h4>
                 <div class="divider" id="your-team"></div>
               </div>
-              <div class="col m4 l4 dropdown-choice">
-                <a class='dropdown-trigger btn center black' data-target='dropdown1' id="other-teams">View Other Teams</a>
-                <ul id='dropdown1' class='dropdown-content'>
-                  <li @click="displayTeam(team)" v-for="team in otherTeams" class="black-text"><a class="black-text">Team # {{ team.name }}</a></li>
-                </ul>
+              <div class="col m4 l4 ">
+                <h4 class="teal-text text-darken-4">Other Teams</h4>
+                <div class="divider" id="your-team"></div>
               </div>
               <div class="col m4 l4">
                 <h4 class="teal-text text-darken-4">Player Stats</h4>
@@ -61,6 +59,10 @@
                   <li class="collection-item" v-if="viewTeam">FLEX2: <span v-if="viewTeam.flx[1]">{{ viewTeam.flx[1].Player }}</span><span class="right" v-if="viewTeam.flx[1]">{{ viewTeam.flx[1].Round }}.{{ viewTeam.flx[1].Pick }}</span></li>
                   <li class="collection-item" v-if="viewTeam">K: <span v-if="null">{{ viewTeam.k.Player }}</span><span class="right" v-if="viewTeam.k">{{ viewTeam.k.Round }}.{{ viewTeam.k.Pick }}</span></li>
                   <li class="collection-item" v-if="viewTeam">DST: <span v-if="null">{{ viewTeam.dst.Player }}</span><span class="right" v-if="viewTeam.dst">{{ viewTeam.dst.Round }}.{{ viewTeam.dst.Pick }}</span></li>
+                </ul>
+                <a class='dropdown-trigger btn center black' data-target='dropdown1' id="other-teams">View Other Teams</a>
+                <ul id='dropdown1' class='dropdown-content'>
+                  <li @click="displayTeam(team)" v-for="team in otherTeams" class="black-text"><a class="black-text">Team # {{ team.name }}</a></li>
                 </ul>
               </div>
               <div class="col m4 l4">
@@ -147,6 +149,9 @@
 <script type="text/javascript">
   import ff2018 from '@/assets/2018yearlyFF.json'
   import round from 'vue-round-filter'
+  import slugify from 'slugify'
+  import db from '@/firebase/init'
+  import firebase from 'firebase'
 
   export default {
     name: 'Drafting',
@@ -177,7 +182,8 @@
           dst: null
         },
         otherTeams: [],
-        viewTeam: null
+        viewTeam: null,
+        user: null
       }
     },
     filters: {
@@ -355,6 +361,11 @@
       displayTeam(team) {
         this.viewTeam = team
         console.log(this.viewTeam)
+      },
+      logout() {
+        firebase.auth().signOut().then(() => {
+          this.$router.push({ name: 'Landing' })
+        })
       }
     },
     created() {
@@ -387,6 +398,18 @@
       for (i = 0; i < this.draftParams.pickPos-1; i++) {
         this.cpuDraft(this.otherTeams[i])
       }
+
+      let ref = db.collection('users')
+
+      // Get the current user
+      ref.where('user_id', '==', firebase.auth().currentUser.uid).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          this.user = doc.data(),
+          this.user.id = doc.id
+          console.log(this.user)
+        })
+      })
     },
     mounted() {
       M.AutoInit()
@@ -467,7 +490,7 @@
   #feed-table {
     overflow: auto;
   }
-  
+
 
 
 

@@ -4,7 +4,7 @@
     <div class="divider"></div>
     <div id="navrow" class="row">
       <span><router-link class="white-text" :to="{ name: 'MockDraft' }">Mock Draft</router-link></span>
-      <span><router-link class="white-text" :to="{ name: 'Landing' }">Statistics</router-link></span>
+      <span><router-link class="white-text" :to="{ name: 'Statistics' }">Statistics</router-link></span>
       <span><router-link class="white-text" :to="{ name: 'SignUp' }">Sign Up</router-link></span>
     </div>
     <div class="row">

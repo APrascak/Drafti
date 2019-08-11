@@ -4,8 +4,8 @@
     <div class="divider"></div>
     <div id="navrow" class="row">
       <span><router-link class="white-text" :to="{ name: 'MockDraft' }">Mock Draft</router-link></span>
-      <span><router-link class="white-text" :to="{ name: 'Visualization' }">Statistics</router-link></span>
-      <span><router-link class="white-text" :to="{ name: 'Landing' }">{{ user.user_email }}</router-link></span>
+      <span><router-link class="white-text" :to="{ name: 'Statistics' }">Statistics</router-link></span>
+      <span v-if="user"><router-link class="white-text" :to="{ name: 'Landing' }">{{ user.user_email }}</router-link></span>
       <span><a href="#" class="white-text" @click="logout">Logout</a></span>
     </div>
     <div class="row">

@@ -4,14 +4,17 @@
     <div class="divider"></div>
     <div id="navrow" class="row">
       <span><router-link class="white-text" :to="{ name: 'MockDraft' }">Mock Draft</router-link></span>
-      <span><router-link class="white-text" :to="{ name: 'Visualization' }">Statistics</router-link></span>
-      <span><router-link class="white-text" :to="{ name: 'Landing' }">{{ user.user_email }}</router-link></span>
+      <span><router-link class="white-text" :to="{ name: 'Statistics' }">Statistics</router-link></span>
+      <span v-if="user"><router-link class="white-text" :to="{ name: 'Landing' }">{{ user.user_email }}</router-link></span>
       <span><a href="#" class="white-text" @click="logout">Logout</a></span>
     </div>
     <div class="row">
       <div class="col m4 l4 offset-m4 offset-l4">
         <div class="card-panel white z-depth-3">
-          <p>Check out Drafti's different statistical pages here:</p>
+          <h4>Resources:</h4>
+          <div class="divider" id="title-div"></div>
+          <span><router-link class ="black-text" :to="{ name: 'PlayerLookup' }">Player Lookup</router-link></span>
+          <p>Look up your favorite players stats from 2018 - 2011.</p>
         </div>
       </div>
     </div>
@@ -29,6 +32,13 @@
     data() {
       return {
         user: null
+      }
+    },
+    methods: {
+      logout() {
+        firebase.auth().signOut().then(() => {
+          this.$router.push({ name: 'Landing' })
+        })
       }
     },
     created() {
@@ -50,7 +60,7 @@
   }
 </script>
 
-<style media="screen">
+<style scoped>
   .my-container {
     position: relative;
     overflow: hidden;
@@ -93,5 +103,10 @@
   .card-panel {
     z-index: 2;
     position: relative;
+  }
+  #title-div {
+    width: 75%;
+    margin-left: 12.5%;
+    margin-bottom: 0%;
   }
 </style>

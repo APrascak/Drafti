@@ -1,36 +1,34 @@
 <template>
-  <div class="container player-lookup">
-    <div class="row theSearch">
-      <div class="col m3 l3 mainSearch">
-        <div id="search" class="hover">
-          <input type="text" name="playerSearch" placeholder="Player Name" v-model="playerSearch">
-        </div>
-        <br>
-        <div class="tableSearch">
-          <table>
-            <tbody>
-              <tr @click="display(player)" v-for="player in stat2018" :key="player.Rk" v-if="player.Player.toLowerCase().includes(playerSearch.toLowerCase())">
-                <td>{{ player.Player }}</td>
-                <td>{{ player.FantPos }}</td>
-              </tr>
-            </tbody>
-          </table>
+  <div class="my-container">
+    <h1 class="center"><router-link class="white-text" :to="{ name: 'Home' }">Drafti</router-link></h1>
+    <div class="divider"></div>
+    <div id="navrow" class="row">
+      <span><router-link class="white-text" :to="{ name: 'MockDraft' }">Mock Draft</router-link></span>
+      <span><router-link class="white-text" :to="{ name: 'Statistics' }">Statistics</router-link></span>
+      <span v-if="user"><router-link class="white-text" :to="{ name: 'Landing' }">{{ user.user_email }}</router-link></span>
+      <span><a href="#" class="white-text" @click="logout">Logout</a></span>
+    </div>
+    <div class="row">
+      <div class="col m3 l3 offset-m2 offset-l2">
+        <div class="card-panel white z-depth-3">
+          <div id="search" class="hover">
+            <input type="text" name="playerSearch" placeholder="Player Name" v-model="playerSearch">
+          </div>
+          <br>
+          <div class="tableSearch">
+            <table>
+              <tbody>
+                <tr @click="display(player)" v-for="player in stat2018" :key="player.Rk" v-if="player.Player.toLowerCase().includes(playerSearch.toLowerCase())">
+                  <td>{{ player.Player }}</td>
+                  <td>{{ player.FantPos }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-
-      <!-- RIGHT SIDE UI DIV -->
-      <div id="display-info" class="col m9 l9 light-green lighten-4 z-depth-2">
-        <!-- Upcoming Player Stats -->
-        <div class="row">
-          <div class="col m3 l3">
-            <img src="https://materializecss.com/images/bold.png" class="circle responsive-img">
-          </div>
-          <div class="col m9 l9 center" v-if="stats[0]">
-            <h3>{{ stats[0].Player }}</h3>
-            <p>{{ stats[0].Tm }}</p>
-          </div>
-        </div>
-        <!-- Prior Years Performance -->
+      <div class="col m5 l5">
+        <div class="card-panel white z-depth-3">
           <table>
             <thead>
               <tr>
@@ -46,7 +44,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="year in stats">
+              <tr v-for="year in stats.slice().reverse()">
                 <td>{{ year.Yr }}</td>
                 <td>{{ year.Tm }}</td>
                 <td>{{ year.PPR }}</td>
@@ -59,19 +57,17 @@
               </tr>
             </tbody>
           </table>
+        </div>
       </div>
     </div>
-    <table>
-      <thead>
-        <tr>
-
-        </tr>
-      </thead>
-    </table>
+    <img src="../../assets/Background-PaintedField.jpg">
   </div>
 </template>
 
 <script type="text/javascript">
+  import slugify from 'slugify'
+  import db from '@/firebase/init'
+  import firebase from 'firebase'
   import ff2011 from '@/assets/2011yearlyFF.json'
   import ff2012 from '@/assets/2012yearlyFF.json'
   import ff2013 from '@/assets/2013yearlyFF.json'
@@ -81,10 +77,12 @@
   import ff2017 from '@/assets/2017yearlyFF.json'
   import ff2018 from '@/assets/2018yearlyFF.json'
   import round from 'vue-round-filter'
+
   export default {
-    name: 'PlayerLookup',
+    name: 'Statistics',
     data() {
       return {
+        user: null,
         stat2011: ff2011,
         stat2012: ff2012,
         stat2013: ff2013,
@@ -101,6 +99,11 @@
       round
     },
     methods: {
+      logout() {
+        firebase.auth().signOut().then(() => {
+          this.$router.push({ name: 'Landing' })
+        })
+      },
       display(lookup) {
         var i
         this.stats=[]
@@ -147,6 +150,18 @@
       }
     },
     created() {
+      let ref = db.collection('users')
+
+      // Get the current user.
+      ref.where('user_id', '==', firebase.auth().currentUser.uid).get()
+      .then(snapshot => {
+        snapshot.forEach(doc => {
+          this.user = doc.data(),
+          this.user.id = doc.id
+          console.log(this.user)
+        })
+      })
+
       // Fixes naming issues for each file before loding into page.
       var i
       ff2011.forEach((player) => {
@@ -213,28 +228,64 @@
           }
         }
       })
+    },
+    mounted() {
+      M.AutoInit()
     }
   }
 </script>
 
-<style media="screen">
-  .player-lookup .tableSearch {
+<style scoped>
+  .my-container {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+  }
+  .my-container h1 {
+      position: relative;
+      z-index: 2;
+      margin-bottom: 0px;
+  }
+  .my-container h5, h4, span {
+    position: relative;
+    z-index: 2;
+  }
+  .my-container img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.75;
+  }
+  .my-container .divider {
+    position: relative;
+    z-index: 2;
+    width: 33%;
+    margin-left: 33.3%;
+    margin-bottom: 1%;
+    height: 3px;
+    background-color: black;
+  }
+  .my-container span {
+    font-size: 18px;
+    margin-left: 1%;
+    margin-right: 1%;
+  }
+  #navrow {
+    margin-top: 0.5%;
+  }
+  .card-panel {
+    z-index: 2;
+    position: relative;
+  }
+  #title-div {
+    width: 75%;
+    margin-left: 12.5%;
+    margin-bottom: 0%;
+  }
+  .tableSearch {
     max-height: 500px;
     overflow: auto;
-  }
-  .player-lookup #search {
-    margin-bottom: 10%;
-  }
-  .player-lookup img {
-    max-height: 2%;
-  }
-  .player-lookup .theSearch {
-    margin-top: 5%;
-  }
-  .player-lookup #display-info {
-    height: 600px;
-  }
-  .player-lookup #display-info table tr td {
-    border: 1px solid black;
   }
 </style>
