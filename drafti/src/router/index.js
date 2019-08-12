@@ -8,7 +8,8 @@ import Login from '@/components/auth/Login'
 import ViewProfile from '@/components/auth/Profile'
 import Statistics from '@/components/statistics/Statistics'
 import PlayerHistory from '@/components/statistics/PlayerHistory'
-import Visualization from '@/components/statistics/Visualization'
+import ADPFinish from '@/components/statistics/ADPFinish'
+import Top10Comparison from '@/components/statistics/PreTop10Comparison.vue'
 import PlayerLookup from '@/components/statistics/PlayerLookup'
 import Blog from '@/components/statistics/Blog'
 import Landing from '@/components/Landing'
@@ -89,9 +90,17 @@ const router = new Router({
       }
     },
     {
-      path: '/Statistics/Visualization',
-      name: 'Visualization',
-      component: Visualization,
+      path: '/Statistics/ADPFinish',
+      name: 'ADPFinish',
+      component: ADPFinish,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/Statistics/Top10Comparison',
+      name: 'Top10Comparison',
+      component: Top10Comparison,
       meta: {
         requiresAuth: true
       }
