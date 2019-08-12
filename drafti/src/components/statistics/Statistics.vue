@@ -13,8 +13,10 @@
         <div class="card-panel white z-depth-3">
           <h4>Resources:</h4>
           <div class="divider" id="title-div"></div>
-          <span><router-link class ="black-text" :to="{ name: 'PlayerLookup' }">Player Lookup</router-link></span>
+          <h5><router-link class="black-text" :to="{ name: 'PlayerLookup' }">Player Lookup</router-link></h5>
           <p>Look up your favorite players stats from 2018 - 2011.</p>
+          <h5><router-link class="black-text" :to="{ name: 'Visualization' }">Data Visualization</router-link></h5>
+          <p>Learn about relationship between past years ADP and PPG.</p>
         </div>
       </div>
     </div>

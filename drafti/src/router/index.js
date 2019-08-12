@@ -28,7 +28,10 @@ const router = new Router({
     {
       path: '/mockdraft',
       name: 'MockDraft',
-      component: MockDraft
+      component: MockDraft,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/signup',
@@ -62,7 +65,7 @@ const router = new Router({
       }
     },
     {
-      path: '/PlayerLookup',
+      path: '/Statistics/PlayerLookup',
       name: 'PlayerLookup',
       component: PlayerLookup,
       meta: {
@@ -86,7 +89,7 @@ const router = new Router({
       }
     },
     {
-      path: '/Visualization',
+      path: '/Statistics/Visualization',
       name: 'Visualization',
       component: Visualization,
       meta: {

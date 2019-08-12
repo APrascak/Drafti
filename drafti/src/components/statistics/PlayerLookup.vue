@@ -10,7 +10,7 @@
     </div>
     <div class="row">
       <div class="col m3 l3 offset-m2 offset-l2">
-        <div class="card-panel white z-depth-3">
+        <div class="card-panel white z-depth-3" id="player-search">
           <div id="search" class="hover">
             <input type="text" name="playerSearch" placeholder="Player Name" v-model="playerSearch">
           </div>
@@ -18,7 +18,8 @@
           <div class="tableSearch">
             <table>
               <tbody>
-                <tr @click="display(player)" v-for="player in stat2018" :key="player.Rk" v-if="player.Player.toLowerCase().includes(playerSearch.toLowerCase())">
+                <tr @click="display(player)" v-for="player in stat2018" :key="player.Rk" v-if="player.Player.toLowerCase().includes(playerSearch.toLowerCase())"
+                v-bind:class="{ black: player == activeInfo, 'white-text': player == activeInfo }">
                   <td>{{ player.Player }}</td>
                   <td>{{ player.FantPos }}</td>
                 </tr>
@@ -28,7 +29,17 @@
         </div>
       </div>
       <div class="col m5 l5">
-        <div class="card-panel white z-depth-3">
+        <div class="card-panel white z-depth-3" id="player-stats">
+          <h3 class="black-text" id="player-title">Player Lookup</h3>
+          <div class="divider" id="player-divider"></div>
+          <div class="row">
+            <div class="col m6 l6 left">
+              <span>Player:</span><span v-if="activeInfo">{{ activeInfo.Player }}</span>
+            </div>
+            <div class="col m6 l6 left">
+              <span>Team:</span><span v-if="activeInfo">{{ activeInfo.Tm }}</span>
+            </div>
+          </div>
           <table>
             <thead>
               <tr>
@@ -92,7 +103,8 @@
         stat2017: ff2017,
         stat2018: ff2018,
         playerSearch: '',
-        stats: []
+        stats: [],
+        activeInfo: null
       }
     },
     filters: {
@@ -105,6 +117,7 @@
         })
       },
       display(lookup) {
+        this.activeInfo = lookup
         var i
         this.stats=[]
         this.stat2011.forEach(player => {
@@ -283,9 +296,27 @@
     width: 75%;
     margin-left: 12.5%;
     margin-bottom: 0%;
+    padding-bottom: 0%;
   }
   .tableSearch {
     max-height: 500px;
     overflow: auto;
+  }
+  #player-title {
+    margin-top:2%;
+  }
+  #player-divider {
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 1%;
+  }
+  #player-search {
+    height: 600px;
+    overflow: auto;
+  }
+  #player-stats {
+    height: 600px;
+    overflow: auto;
+    padding-bottom: 0px;
   }
 </style>
