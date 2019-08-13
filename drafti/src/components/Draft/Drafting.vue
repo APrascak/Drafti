@@ -78,17 +78,29 @@
                   <li class="collection-item">VBD: <span v-if="activeInfo">{{ activeInfo.VBD }}</span></li>
                   <li class="collection-item">
                     <div class="white-text" v-if="!activeInfo">Test</div>
-                    <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Rushing Attempts: {{ activeInfo.Att__1 }}</span></div>
+                    <div v-if="activeInfo">
+                      <span v-if="activeInfo.FantPos == 'RB' || activeInfo.FantPos == 'TE' || activeInfo.FantPos == 'WR'">Receptions: {{ activeInfo.Rec }}</span>
+                      <span v-if="activeInfo.FantPos == 'QB'">Passing Yards: {{ activeInfo.Int }}</span>
+                    </div>
                   </li>
                   <li class="collection-item">
                     <div class="white-text" v-if="!activeInfo">Test</div>
-                    <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Rushing Yards: {{ activeInfo.Yds__1 }}</span></div>
+                    <div v-if="activeInfo">
+                      <span v-if="activeInfo.FantPos == 'RB' || activeInfo.FantPos == 'TE' || activeInfo.FantPos == 'WR' ">Total Yards: {{ activeInfo.Yds__1 + activeInfo.Yds__2 }}</span>
+                      <span v-if="activeInfo.FantPos == 'QB'">Passing Yards: {{ activeInfo.Yds }}</span>
+                    </div>
                   </li>
                   <li class="collection-item">
                     <div class="white-text" v-if="!activeInfo">Test</div>
-                    <div v-if="activeInfo"><span v-if="activeInfo.FantPos == 'RB'">Rushing TD: {{ activeInfo.TD__1 }}</span></div>
+                    <div v-if="activeInfo">
+                      <span v-if="activeInfo.FantPos == 'RB' || activeInfo.FantPos == 'TE' || activeInfo.FantPos == 'WR' ">Total TDs: {{ activeInfo.TD__1 + activeInfo.TD__2 }}</span>
+                      <span v-if="activeInfo.FantPos == 'QB'">Passing TDs: {{ activeInfo.TD }}</span>
+                    </div>
                   </li>
                 </ul>
+                <div class="center">
+                  <button @click="draft(activeInfo)" class="btn black">Draft</button>
+                </div>
               </div>
             </div>
           </div>
@@ -119,9 +131,6 @@
               </ul>
             </div>
             <div class="col m4 l4 players">
-              <div class="center">
-                <button @click="draft(activeInfo)" class="btn teal darken-4">Draft</button>
-              </div>
               <table>
                 <thead>
                   <th>Pos</th>
