@@ -9,7 +9,9 @@
         <span v-if="user"><router-link class="white-text" :to="{ name: 'Home' }">{{ user.user_email }}</router-link></span>
         <span><a href="#" class="white-text" @click="logout">Logout</a></span>
       </div>
-      <div class="row">
+
+      <!-- Desktop Layout -->
+      <div class="row show-on-medium-and-up hide-on-small-only">
         <div class="col m6 l6 offset-m3 offset-l3">
           <div class="card-panel hoverable">
             <h4>Pre-Season Top 10 Comparison</h4>
@@ -66,6 +68,50 @@
           </div>
         </div>
       </div>
+
+      <!-- Mobile Layout -->
+      <div class="row show-on-small hide-on-med-and-up">
+        <div class="col m6 l6 offset-m3 offset-l3">
+          <div class="card-panel hoverable">
+            <h4>Pre-Season Top 10 Comparison</h4>
+            <div class="divider" id="top10-div-mobile"></div>
+            <div id="wr-analysis-mobile">
+              <p>ESPN recently released their <a href="https://www.espn.com/fantasy/football/story/_/id/25759239/fantasy-football-2019-updated-top-200-ppr-rankings-matthew-berry">Top 200 Fantasy Players for 2019</a> as of Sunday, August 11.
+                The chart below responsively displays the current top 10 wide receivers for 2019. Selecting a players name will toggle removing/adding their information from the chart.
+                Here are the 2019 rankings:
+              </p>
+              <ul>
+                <li>WR1: Davante Adams</li>
+                <li>WR2: DeAndre Hopkins</li>
+                <li>WR3: Odell Beckham Jr.</li>
+                <li>WR4: Julio Jones</li>
+                <li>WR5: Michael Thomas</li>
+                <li>WR6: JuJu Smith-Schuster</li>
+                <li>WR7: Tyreek Hill</li>
+                <li>WR8: Mike Evans</li>
+                <li>WR9: Keenan Allen</li>
+                <li>WR10: T.Y. Hilton</li>
+              </ul>
+            </div>
+            <div id="chartWR-mobile"></div>
+            <p>Here are the rankings for the top 10 runnings backs of 2019, as listed by ESPN.</p>
+            <ul>
+              <li>RB1: Saquon Barkley</li>
+              <li>RB2: Christian McCaffrey</li>
+              <li>RB3: Alvin Kamara</li>
+              <li>RB4: David Johnson</li>
+              <li>RB5: Ezekiel Elliott</li>
+              <li>RB6: Todd Gurley II</li>
+              <li>RB7: Joe Mixon</li>
+              <li>RB8: Nick Chubb</li>
+              <li>RB9: Josh Jacobs</li>
+              <li>RB10: Damien Williams</li>
+            </ul>
+            <div id="chartRB-mobile"></div>
+          </div>
+        </div>
+      </div>
+
     </div>
     <img src="../../assets/Background-PaintedField.jpg">
   </div>
@@ -185,8 +231,76 @@
         }
       }
 
+      var optionsWRMobile = {
+        title: {
+          text: '2019 Top 10 WRs',
+          align: 'center',
+          style: {
+            fontSize: '16px',
+            color: 'black'
+          }
+        },
+        chart: {
+          type: 'line',
+          height: '500px'
+        },
+        series: [
+          {
+            name: 'Davante Adams',
+            data: [100.6, 106.3, 246.7, 222.5, 329.6]
+          },
+          {
+            name: 'DeAndre Hopkins',
+            data: [231, 331.1, 197.4, 309.8, 333.5]
+          },
+          {
+            name: 'Odell Beckham Jr.',
+            data: [295, 319.3, 296.6, 74, 230.3]
+          },
+          {
+            name: 'Julio Jones',
+            data: [297.4, 369.1, 259.9, 251.9, 325.9]
+          },
+          {
+            name: 'Michael Thomas',
+            data: [0, 0, 255.7, 258.5, 315.5]
+          },
+          {
+            name: 'JuJu Smith-Schuster',
+            data: [0, 0, 0, 197.7, 296.9]
+          },
+          {
+            name: 'Tyreek Hill',
+            data: [0, 0, 217, 245.2, 334]
+          },
+          {
+            name: 'Mike Evans',
+            data: [245.1, 210.6, 304.1, 203.1, 284.4]
+          },
+          {
+            name: 'Keenan Allen',
+            data: [175.3, 161.5, 12.3, 278.2, 260.1]
+          },
+          {
+            name: 'T.Y. Hilton',
+            data: [258.5, 211.4, 273.8, 175.6, 239]
+          }
+        ],
+        yaxis: {
+          min: 0,
+          max: 410,
+        },
+        xaxis: {
+          categories: [2014, 2015, 2016, 2017, 2018]
+        }
+      }
+
       var chartWR = new ApexCharts(document.querySelector('#chartWR'), optionsWR)
       chartWR.render()
+
+      var chartWRMobile = new ApexCharts(document.querySelector('#chartWR-mobile'), optionsWRMobile)
+      chartWRMobile.render()
+
 
       var optionsRB = {
         title: {
@@ -251,8 +365,75 @@
         }
       }
 
+      var optionsRBMobile = {
+        title: {
+          text: '2019 Top 10 RBs',
+          align: 'center',
+          style: {
+            fontSize: '16px',
+            color: 'black'
+          }
+        },
+        chart: {
+          type: 'line',
+          height: '500px'
+        },
+        series: [
+          {
+            name: 'Saquon Barkley',
+            data: [0, 0, 0, 0, 385.8]
+          },
+          {
+            name: 'Christian McCaffrey',
+            data: [0, 0, 0, 228.6, 385.5]
+          },
+          {
+            name: 'Alvin Kamara',
+            data: [0, 0, 0, 320.4, 354.2]
+          },
+          {
+            name: 'David Johnson',
+            data: [0, 215.8, 407.8, 13, 246.6]
+          },
+          {
+            name: 'Ezekiel Elliott',
+            data: [0, 0, 325.4, 203.2, 329.1]
+          },
+          {
+            name: 'Todd Gurley II',
+            data: [0, 208.4, 198.2, 383.3, 372.1]
+          },
+          {
+            name: 'Joe Mixon',
+            data: [0, 0, 0, 141.3, 243.4]
+          },
+          {
+            name: 'Nick Chubb',
+            data: [0, 0, 0, 0, 194.5]
+          },
+          {
+            name: 'Josh Jacobs',
+            data: [0, 0, 0, 0, 0]
+          },
+          {
+            name: 'Damien Williams',
+            data: [57.9, 45.1, 93.4, 59.6, 98.6]
+          }
+        ],
+        yaxis: {
+          min: 0,
+          max: 410,
+        },
+        xaxis: {
+          categories: [2014, 2015, 2016, 2017, 2018]
+        }
+      }
+
       var chartRB = new ApexCharts(document.querySelector('#chartRB'), optionsRB)
       chartRB.render()
+
+      var chartRBMobile = new ApexCharts(document.querySelector('#chartRB-mobile'), optionsRBMobile)
+      chartRBMobile.render()
     }
   }
 </script>
@@ -339,5 +520,12 @@
   }
   #wr-analysis ul {
     margin: 5% 0% 5% 0%;
+  }
+  #top10-div-mobile {
+    width: 100%;
+    margin-left: 0%;
+  }
+  #wr-analysis-mobile li {
+    text-align: center;
   }
 </style>
