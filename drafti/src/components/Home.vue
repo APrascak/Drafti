@@ -9,7 +9,7 @@
       <span><a href="#" class="white-text" @click="logout">Logout</a></span>
     </div>
     <div class="row">
-      <div class="col m4 l4 offset-m4 offset-l4">
+      <div class="col s12 m4 l4 offset-m4 offset-l4">
         <div class="card-panel white z-depth-3">
           <h4><router-link class="black-text" :to="{ name: 'MockDraft'}">Mock Draft</router-link></h4>
           <div class="divider" id="home-divider"></div>

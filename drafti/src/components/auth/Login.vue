@@ -8,7 +8,7 @@
       <span><router-link class="white-text" :to="{ name: 'SignUp' }">Sign Up</router-link></span>
     </div>
     <div class="row">
-      <div class="col m4 l4 offset-m4 offset-l4">
+      <div class="col xs12 s12 m4 l4 offset-m4 offset-l4">
         <form @submit.prevent="login" class="card-panel hoverable center">
           <h2 class="center black-text darken-4">Login</h2>
           <div class="field">

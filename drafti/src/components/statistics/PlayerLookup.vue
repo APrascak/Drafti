@@ -1,73 +1,92 @@
 <template>
   <div class="my-container">
-    <h1 class="center"><router-link class="white-text" :to="{ name: 'Home' }">Drafti</router-link></h1>
-    <div class="divider"></div>
-    <div id="navrow" class="row">
-      <span><router-link class="white-text" :to="{ name: 'MockDraft' }">Mock Draft</router-link></span>
-      <span><router-link class="white-text" :to="{ name: 'Statistics' }">Statistics</router-link></span>
-      <span v-if="user"><router-link class="white-text" :to="{ name: 'Home' }">{{ user.user_email }}</router-link></span>
-      <span><a href="#" class="white-text" @click="logout">Logout</a></span>
-    </div>
-    <div class="row">
-      <div class="col m3 l3 offset-m2 offset-l2">
-        <div class="card-panel white z-depth-3" id="player-search">
-          <div id="search" class="hover">
-            <input type="text" name="playerSearch" placeholder="Player Name" v-model="playerSearch">
+    <div id="content">
+      <h1 class="center"><router-link class="white-text" :to="{ name: 'Home' }">Drafti</router-link></h1>
+      <div class="divider"></div>
+      <div id="navrow" class="row">
+        <span><router-link class="white-text" :to="{ name: 'MockDraft' }">Mock Draft</router-link></span>
+        <span><router-link class="white-text" :to="{ name: 'Statistics' }">Statistics</router-link></span>
+        <span v-if="user"><router-link class="white-text" :to="{ name: 'Home' }">{{ user.user_email }}</router-link></span>
+        <span><a href="#" class="white-text" @click="logout">Logout</a></span>
+      </div>
+      <div class="row">
+        <div class="col s12 m3 l3 offset-m2 offset-l2">
+          <div class="card-panel white z-depth-3 show-on-medium-and-up hide-on-small-only" id="player-search">
+            <div id="search" class="hover">
+              <input type="text" name="playerSearch" placeholder="Player Name" v-model="playerSearch">
+            </div>
+            <br>
+            <div class="tableSearch">
+              <table>
+                <tbody>
+                  <tr @click="display(player)" v-for="player in stat2018" :key="player.Rk" v-if="player.Player.toLowerCase().includes(playerSearch.toLowerCase())"
+                  v-bind:class="{ black: player == activeInfo, 'white-text': player == activeInfo }">
+                    <td>{{ player.Player }}</td>
+                    <td>{{ player.FantPos }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <br>
-          <div class="tableSearch">
+          <div class="card-panel white z-depth-3 show-on-small hide-on-med-and-up" id="player-search-mobile">
+            <div id="search" class="hover">
+              <input type="text" name="playerSearch" placeholder="Player Name" v-model="playerSearch">
+            </div>
+            <br>
+            <div class="tableSearch">
+              <table>
+                <tbody>
+                  <tr @click="display(player)" v-for="player in stat2018" :key="player.Rk" v-if="player.Player.toLowerCase().includes(playerSearch.toLowerCase())"
+                  v-bind:class="{ black: player == activeInfo, 'white-text': player == activeInfo }">
+                    <td>{{ player.Player }}</td>
+                    <td>{{ player.FantPos }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="col s12 m5 l5">
+          <div class="card-panel white z-depth-3" id="player-stats">
+            <h3 class="black-text" id="player-title">Player Lookup</h3>
+            <div class="divider" id="player-divider"></div>
+            <div class="row">
+              <div class="col s12 m6 l6 left">
+                <span>Player:</span><span v-if="activeInfo">{{ activeInfo.Player }}</span>
+              </div>
+              <div class="col s12 m6 l6 left">
+                <span>Team:</span><span v-if="activeInfo">{{ activeInfo.Tm }}</span>
+              </div>
+            </div>
             <table>
+              <thead>
+                <tr>
+                  <th>Year</th>
+                  <th>Team</th>
+                  <th>Yearly Total</th>
+                  <th>G</th>
+                  <th>GS</th>
+                  <th>PPG</th>
+                  <th>VBD</th>
+                  <th>Pos. Rank</th>
+                  <th>Ovr. Rank</th>
+                </tr>
+              </thead>
               <tbody>
-                <tr @click="display(player)" v-for="player in stat2018" :key="player.Rk" v-if="player.Player.toLowerCase().includes(playerSearch.toLowerCase())"
-                v-bind:class="{ black: player == activeInfo, 'white-text': player == activeInfo }">
-                  <td>{{ player.Player }}</td>
-                  <td>{{ player.FantPos }}</td>
+                <tr v-for="year in stats.slice().reverse()">
+                  <td>{{ year.Yr }}</td>
+                  <td>{{ year.Tm }}</td>
+                  <td>{{ year.PPR }}</td>
+                  <td>{{ year.G }}</td>
+                  <td>{{ year.GS }}</td>
+                  <td>{{ (year.PPR / year.G) | round(2) }}</td>
+                  <td>{{ year.VBD }}</td>
+                  <td>{{ year.PosRank }}</td>
+                  <td>{{ year.Rk }}</td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </div>
-      </div>
-      <div class="col m5 l5">
-        <div class="card-panel white z-depth-3" id="player-stats">
-          <h3 class="black-text" id="player-title">Player Lookup</h3>
-          <div class="divider" id="player-divider"></div>
-          <div class="row">
-            <div class="col m6 l6 left">
-              <span>Player:</span><span v-if="activeInfo">{{ activeInfo.Player }}</span>
-            </div>
-            <div class="col m6 l6 left">
-              <span>Team:</span><span v-if="activeInfo">{{ activeInfo.Tm }}</span>
-            </div>
-          </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Year</th>
-                <th>Team</th>
-                <th>Yearly Total</th>
-                <th>G</th>
-                <th>GS</th>
-                <th>PPG</th>
-                <th>VBD</th>
-                <th>Pos. Rank</th>
-                <th>Ovr. Rank</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="year in stats.slice().reverse()">
-                <td>{{ year.Yr }}</td>
-                <td>{{ year.Tm }}</td>
-                <td>{{ year.PPR }}</td>
-                <td>{{ year.G }}</td>
-                <td>{{ year.GS }}</td>
-                <td>{{ (year.PPR / year.G) | round(2) }}</td>
-                <td>{{ year.VBD }}</td>
-                <td>{{ year.PosRank }}</td>
-                <td>{{ year.Rk }}</td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
     </div>
@@ -254,6 +273,10 @@
     overflow: hidden;
     height: 100vh;
   }
+  #content {
+    height: 100vh;
+    overflow: auto;
+  }
   .my-container h1 {
       position: relative;
       z-index: 2;
@@ -318,5 +341,9 @@
     height: 600px;
     overflow: auto;
     padding-bottom: 0px;
+  }
+  #player-search-mobile {
+    height: 300px;
+    overflow: auto;
   }
 </style>
