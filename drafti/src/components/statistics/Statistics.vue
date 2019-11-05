@@ -15,8 +15,8 @@
           <div class="divider" id="title-div"></div>
           <h5><router-link class="black-text" :to="{ name: 'PlayerLookup' }">Player Lookup</router-link></h5>
           <p>Look up your favorite players stats from 2018 - 2011.</p>
-          <h5><router-link class="black-text" :to="{ name: 'ADPFinish' }">Data Visualization</router-link></h5>
-          <p>Learn about relationship between past years ADP and PPG.</p>
+          <!-- <h5><router-link class="black-text" :to="{ name: 'ADPFinish' }">Data Visualization</router-link></h5>
+          <p>Learn about relationship between past years ADP and PPG.</p> -->
           <h5><router-link class="black-text" :to="{ name: 'Top10Comparison' }">Pre-Season Top 10 Comparison</router-link></h5>
           <p>Visually compare each of ESPN's top 10 WRs and RBs.</p>
         </div>
